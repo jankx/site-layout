@@ -1,15 +1,16 @@
 {
-    "name": "jankx/site-layouts",
-    "description": "The best way to create multi site layouts and management layouts",
-    "type": "library",
-    "require": {
-        "jankx/core": "dev-master"
-    },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Puleeno Nguyen",
-            "email": "puleeno@gmail.com"
-        }
-    ]
+  "name": "jankx/site-layouts",
+  "description": "The best way to create multi site layouts and management layouts",
+  "type": "library",
+  "require": {
+    "jankx/core": "dev-master"
+  },
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Puleeno Nguyen",
+      "email": "puleeno@gmail.com"
+    }
+  ]
 }

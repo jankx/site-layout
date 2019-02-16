@@ -3,7 +3,7 @@
   "description": "The best way to create multi site layouts and management layouts",
   "type": "library",
   "require": {
-    "jankx/core": "dev-master"
+    "jankx/core": "dev-dev"
   },
   "license": "MIT",
   "minimum-stability": "dev",

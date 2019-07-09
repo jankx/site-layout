@@ -58,12 +58,12 @@ class Layout
         };
     }
 
-    public function pageSetup()
+    public function pageSetup($engine)
     {
         /**
          * Load template for site layout
          */
-        $templateLoader = new TemplateLoader($this->getLayout());
+        $templateLoader = new TemplateLoader($this->getLayout(), $engine);
         $templateLoader->load();
     }
 

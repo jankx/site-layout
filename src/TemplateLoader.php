@@ -9,13 +9,18 @@ class TemplateLoader
     protected $layout;
     protected $engine;
     protected $numOfSidebars;
+    protected $fullContent = false;
 
     public function __construct($layout, $engine)
     {
         $this->layout = $layout;
         $this->engine = $engine;
-
         $this->numOfSidebars = 0;
+        $this->fullContent = (
+            $layout === 'lfw' &&
+            is_int(strpos($engine->rootDirectory, 'plugins/elementor')) &&
+            $engine->baseTemplate === 'header-footer'
+        );
     }
 
     /**
@@ -61,20 +66,32 @@ class TemplateLoader
 
     public function openContentSidebarWrap()
     {
-        echo sprintf('<div class="%s"><div class="container"><div class="row">', 'main-content-sidebar');
+        echo sprintf('<div class="%s">', 'main-content-sidebar');
+        if ($this->fullContent) {
+            return;
+        }
+        echo '<div class="container"><div class="row">';
     }
 
     public function closeContentSidebarWrap()
     {
-        echo '</div></div></div>';
+        echo '</div>';
+        if ($this->fullContent) {
+            return;
+        }
+        echo '</div></div>';
     }
 
     public function openContentWrap()
     {
-        $used    = $this->numOfSidebars * 3;
-        $columns = Jankx::buildColumnClass(12-$used);
+        $class = '';
 
-        echo sprintf('<div class="main-content %1$s">', Jankx::makeColumnClass($columns));
+        if (!$this->fullContent) {
+            $used    = $this->numOfSidebars * 3;
+            $columns = Jankx::buildColumnClass(12-$used);
+            $class .= ' ' . Jankx::makeColumnClass($columns);
+        }
+        echo sprintf('<div class="main-content%1$s">', $class);
     }
 
     public function closeContentWrap()

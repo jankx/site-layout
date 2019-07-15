@@ -1,5 +1,5 @@
 <?php
-namespace Jankx\SiteLayouts\Exceptions;
+namespace Jankx\SiteLayout\Exceptions;
 
 class SiteLayoutException extends \Exception
 {

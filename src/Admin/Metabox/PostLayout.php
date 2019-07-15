@@ -1,5 +1,5 @@
 <?php
-namespace Jankx\SiteLayouts\Admin\Metabox;
+namespace Jankx\SiteLayout\Admin\Metabox;
 
 use Jankx;
 

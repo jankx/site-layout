@@ -1,7 +1,7 @@
 <?php
-namespace Jankx\SiteLayouts\Admin;
+namespace Jankx\SiteLayout\Admin;
 
-use Jankx\SiteLayouts\Admin\Metabox\PostLayout;
+use Jankx\SiteLayout\Admin\Metabox\PostLayout;
 
 class SiteLayout
 {

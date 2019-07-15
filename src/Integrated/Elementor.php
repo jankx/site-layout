@@ -1,5 +1,5 @@
 <?php
-namespace Jankx\SiteLayouts\Integrated;
+namespace Jankx\SiteLayout\Integrated;
 
 class Elementor
 {

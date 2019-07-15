@@ -1,8 +1,8 @@
 <?php
-namespace Jankx\SiteLayouts;
+namespace Jankx\SiteLayout;
 
 use Jankx;
-use Jankx\SiteLayouts\Exceptions\SiteLayoutException;
+use Jankx\SiteLayout\Exceptions\SiteLayoutException;
 
 class TemplateLoader
 {

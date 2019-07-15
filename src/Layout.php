@@ -1,9 +1,9 @@
 <?php
-namespace Jankx\SiteLayouts;
+namespace Jankx\SiteLayout;
 
 use Jankx;
-use Jankx\SiteLayouts\Admin\SiteLayout as SiteLayoutAdmin;
-use Jankx\SiteLayouts\Admin\Metabox\PostLayout;
+use Jankx\SiteLayout\Admin\SiteLayout as SiteLayoutAdmin;
+use Jankx\SiteLayout\Admin\Metabox\PostLayout;
 
 class Layout
 {

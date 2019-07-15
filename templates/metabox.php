@@ -14,7 +14,9 @@
 <select name="<?php echo esc_attr($metaKey); ?>" id="post-layouts" class="widefat">
     <option value=""><?php esc_html_e('Default Layout', 'jankx'); ?></option>
 
-    <?php foreach($layouts as $layout => $name): ?>
-        <option <?php if ($currentLayout === $layout) { echo ' selected';} ?> value="<?php echo $layout; ?>"><?php echo $name; ?></option>
+    <?php foreach ($layouts as $layout => $name) : ?>
+        <option <?php if ($currentLayout === $layout) {
+            echo ' selected';
+                } ?> value="<?php echo $layout; ?>"><?php echo $name; ?></option>
     <?php endforeach; ?>
 </select>

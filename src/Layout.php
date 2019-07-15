@@ -50,10 +50,10 @@ class Layout
     public function setupJankx($jankx)
     {
         $postLayout = self::instance();
-        $jankx->getSupportLayouts = function() use($postLayout) {
+        $jankx->getSupportLayouts = function () use ($postLayout) {
             return $postLayout->getSupportLayouts();
         };
-        $jankx->getLayout = function() use($postLayout) {
+        $jankx->getLayout = function () use ($postLayout) {
             return $postLayout->getLayout();
         };
     }

@@ -48,10 +48,10 @@ class PostLayout
         if (!in_array($post->post_type, $this->supportPostTypes)) {
             return;
         }
-        if (
-            empty($_POST[self::POST_LAYOUT_META_KEY]) ||
+        if (empty($_POST[self::POST_LAYOUT_META_KEY]) ||
             !in_array(
-                $_POST[self::POST_LAYOUT_META_KEY], array_keys($this->supportPostTypes)
+                $_POST[self::POST_LAYOUT_META_KEY],
+                array_keys($this->supportPostTypes)
             )
         ) {
             delete_post_meta($postID, self::POST_LAYOUT_META_KEY);

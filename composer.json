@@ -1,5 +1,5 @@
 {
-  "name": "jankx/site-layouts",
+  "name": "jankx/site-layout",
   "description": "The best way to create multi site layouts and management layouts",
   "type": "library",
   "require": {
@@ -15,7 +15,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "Jankx\\SiteLayouts\\": "src/"
+      "Jankx\\SiteLayout\\": "src/"
     }
   }
 }

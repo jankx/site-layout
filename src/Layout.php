@@ -7,8 +7,14 @@ use Jankx\SiteLayout\Admin\Metabox\PostLayout;
 
 class Layout
 {
-    protected $currentLayout;
+	const LAYOUT_FULL_WIDTH = 'lfw';
+	const LAYOUT_CONTENT_SIDEBAR = 'lcs';
+	const LAYOUT_SIDEBAR_CONTENT = 'lsc';
+	const LAYOUT_CONTENT_SIDEBAR_SIDEBAR = 'lcss';
+	const LAYOUT_SIDEBAR_CONTENT_SIDEBAR = 'lscs';
+	const LAYOUT_SIDEBAR_SIDEBAR_CONTENT = 'lssc';
 
+	protected $currentLayout;
     protected static $instance;
 
     public static function instance()
@@ -76,12 +82,12 @@ class Layout
     public function getSupportLayouts()
     {
         $layouts = apply_filters('jankx_support_layouts', array(
-            'lfw'  => __('Full Width', 'jankx'),
-            'lcs'  => __('Content Sidebar', 'jankx'),
-            'lsc'  => __('Sidebar Content', 'jankx'),
-            'lcss' => __('Content Sidebar Sidebar', 'jankx'),
-            'lscs' => __('Sidebar Content Sidebar', 'jankx'),
-            'lssc' => __('Sidebar Sidebar Content', 'jankx'),
+            self::LAYOUT_FULL_WIDTH => __('Full Width', 'jankx'),
+            self::LAYOUT_CONTENT_SIDEBAR => __('Content Sidebar', 'jankx'),
+            self::LAYOUT_SIDEBAR_CONTENT => __('Sidebar Content', 'jankx'),
+            self::LAYOUT_CONTENT_SIDEBAR_SIDEBAR => __('Content Sidebar Sidebar', 'jankx'),
+            self::LAYOUT_SIDEBAR_CONTENT_SIDEBAR => __('Sidebar Content Sidebar', 'jankx'),
+            self::LAYOUT_SIDEBAR_SIDEBAR_CONTENT => __('Sidebar Sidebar Content', 'jankx'),
         ));
 
         return $layouts;

@@ -96,10 +96,10 @@ class Layout
         $this->currentLayout = $this->detectLayout();
 
         if (empty($this->currentLayout)) {
-            return $this->defaultLayout();
+            $this->currentLayout = $this->defaultLayout();
         }
 
-        return $this->currentLayout;
+		return apply_filters('jankx_get_layout', $this->currentLayout);
     }
 
     public function detectLayout()

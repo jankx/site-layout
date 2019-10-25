@@ -7,14 +7,14 @@ use Jankx\SiteLayout\Admin\Metabox\PostLayout;
 
 class Layout
 {
-	const LAYOUT_FULL_WIDTH = 'lfw';
-	const LAYOUT_CONTENT_SIDEBAR = 'lcs';
-	const LAYOUT_SIDEBAR_CONTENT = 'lsc';
-	const LAYOUT_CONTENT_SIDEBAR_SIDEBAR = 'lcss';
-	const LAYOUT_SIDEBAR_CONTENT_SIDEBAR = 'lscs';
-	const LAYOUT_SIDEBAR_SIDEBAR_CONTENT = 'lssc';
+    const LAYOUT_FULL_WIDTH = 'lfw';
+    const LAYOUT_CONTENT_SIDEBAR = 'lcs';
+    const LAYOUT_SIDEBAR_CONTENT = 'lsc';
+    const LAYOUT_CONTENT_SIDEBAR_SIDEBAR = 'lcss';
+    const LAYOUT_SIDEBAR_CONTENT_SIDEBAR = 'lscs';
+    const LAYOUT_SIDEBAR_SIDEBAR_CONTENT = 'lssc';
 
-	protected $currentLayout;
+    protected $currentLayout;
     protected static $instance;
 
     public static function instance()
@@ -105,7 +105,7 @@ class Layout
             $this->currentLayout = $this->defaultLayout();
         }
 
-		return apply_filters('jankx_get_layout', $this->currentLayout);
+        return apply_filters('jankx_get_layout', $this->currentLayout);
     }
 
     public function detectLayout()

@@ -1,7 +1,6 @@
 <?php
 namespace Jankx\SiteLayout;
 
-use Jankx;
 use Jankx\SiteLayout\Admin\SiteLayout as SiteLayoutAdmin;
 use Jankx\SiteLayout\Admin\Metabox\PostLayout;
 
@@ -41,7 +40,7 @@ class Layout
 
     protected function includes()
     {
-        if (Jankx::isRequest('admin')) {
+        if (is_admin()) {
             new SiteLayoutAdmin();
         }
     }
@@ -110,15 +109,15 @@ class Layout
 
     public function detectLayout()
     {
-        if (Jankx::isRequest('frontend')) {
-            if (is_singular()) {
-                return get_post_meta(get_the_ID(), PostLayout::POST_LAYOUT_META_KEY, true);
-            }
-        } elseif (Jankx::isRequest('admin')) {
+        if (is_admin()) {
             $currentScreen = get_current_screen();
             if ($currentScreen->base === 'post') {
                 $post_id = isset($_GET['post']) ? (int)$_GET['post'] : 0;
                 return get_post_meta($post_id, PostLayout::POST_LAYOUT_META_KEY, true);
+            }
+        } else {
+            if (is_singular()) {
+                return get_post_meta(get_the_ID(), PostLayout::POST_LAYOUT_META_KEY, true);
             }
         }
     }

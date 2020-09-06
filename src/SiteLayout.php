@@ -4,6 +4,8 @@ namespace Jankx\SiteLayout;
 use Jankx\SiteLayout\Admin\SiteLayout as SiteLayoutAdmin;
 use Jankx\SiteLayout\Admin\Metabox\PostLayout;
 
+use function get_current_screen;
+
 class SiteLayout
 {
     const LAYOUT_FULL_WIDTH = 'lfw';
@@ -55,7 +57,10 @@ class SiteLayout
         /**
          * Load template for site layout
          */
-        $templateLoader = new TemplateLoader($this->getLayout(), $engine);
+        $templateLoader = new TemplateLoader(
+            $this->getLayout(),
+            $engine
+        );
         $templateLoader->load();
     }
 

@@ -80,10 +80,10 @@ class SiteLayout
 
     public function getSupportLayouts()
     {
-        $layouts = apply_filters('jankx_support_layouts', array(
-            self::LAYOUT_FULL_WIDTH => __('Full Width', 'jankx'),
-            self::LAYOUT_CONTENT_SIDEBAR => __('Content Sidebar', 'jankx'),
-            self::LAYOUT_SIDEBAR_CONTENT => __('Sidebar Content', 'jankx'),
+        $layouts = apply_filters('jankx_support_site_layouts', array(
+            self::LAYOUT_FULL_WIDTH              => __('Full Width', 'jankx'),
+            self::LAYOUT_CONTENT_SIDEBAR         => __('Content Sidebar', 'jankx'),
+            self::LAYOUT_SIDEBAR_CONTENT         => __('Sidebar Content', 'jankx'),
             self::LAYOUT_CONTENT_SIDEBAR_SIDEBAR => __('Content Sidebar Sidebar', 'jankx'),
             self::LAYOUT_SIDEBAR_CONTENT_SIDEBAR => __('Sidebar Content Sidebar', 'jankx'),
             self::LAYOUT_SIDEBAR_SIDEBAR_CONTENT => __('Sidebar Sidebar Content', 'jankx'),
@@ -95,7 +95,7 @@ class SiteLayout
     public function getLayout()
     {
         if (!is_null($this->currentLayout)) {
-            $this->currentLayout;
+            return $this->currentLayout;
         }
 
         $this->currentLayout = $this->detectLayout();

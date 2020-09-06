@@ -4,7 +4,7 @@ namespace Jankx\SiteLayout;
 use Jankx\SiteLayout\Admin\SiteLayout as SiteLayoutAdmin;
 use Jankx\SiteLayout\Admin\Metabox\PostLayout;
 
-class Layout
+class SiteLayout
 {
     const LAYOUT_FULL_WIDTH = 'lfw';
     const LAYOUT_CONTENT_SIDEBAR = 'lcs';
@@ -16,7 +16,7 @@ class Layout
     protected $currentLayout;
     protected static $instance;
 
-    public static function instance()
+    public static function getInstance()
     {
         if (is_null(self::$instance)) {
             self::$instance = new self();
@@ -24,7 +24,7 @@ class Layout
         return self::$instance;
     }
 
-    public function __construct()
+    private function __construct()
     {
         if (!defined('JANKX_SITE_LAYOUT_LOAD_FILE')) {
             define('JANKX_SITE_LAYOUT_LOAD_FILE', __FILE__);

@@ -18,10 +18,10 @@ class SiteLayout
 
     public static function getInstance()
     {
-        if (is_null(self::$instance)) {
-            self::$instance = new self();
+        if (is_null(static::$instance)) {
+            static::$instance = new static();
         }
-        return self::$instance;
+        return static::$instance;
     }
 
     private function __construct()
@@ -34,11 +34,11 @@ class SiteLayout
             define('JANKX_SITE_LAYOUT_DIR', realpath(dirname(JANKX_SITE_LAYOUT_LOAD_FILE) . '/..'));
         }
 
-        $this->includes();
+        $this->loadFeatures();
         $this->initHooks();
     }
 
-    protected function includes()
+    protected function loadFeatures()
     {
         if (is_admin()) {
             new SiteLayoutAdmin();
@@ -47,23 +47,10 @@ class SiteLayout
 
     protected function initHooks()
     {
-        add_action('jankx_setup_environment', array($this, 'setupJankx'));
         add_filter('body_class', array($this, 'bodyClasses'));
-        add_action('jankx_page_setup', array($this, 'pageSetup'));
     }
 
-    public function setupJankx($jankx)
-    {
-        $postLayout = self::instance();
-        $jankx->getSupportLayouts = function () use ($postLayout) {
-            return $postLayout->getSupportLayouts();
-        };
-        $jankx->getLayout = function () use ($postLayout) {
-            return $postLayout->getLayout();
-        };
-    }
-
-    public function pageSetup($engine)
+    public function buildLayout($engine)
     {
         /**
          * Load template for site layout

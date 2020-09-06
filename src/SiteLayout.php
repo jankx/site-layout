@@ -8,12 +8,12 @@ use function get_current_screen;
 
 class SiteLayout
 {
-    const LAYOUT_FULL_WIDTH = 'lfw';
-    const LAYOUT_CONTENT_SIDEBAR = 'lcs';
-    const LAYOUT_SIDEBAR_CONTENT = 'lsc';
-    const LAYOUT_CONTENT_SIDEBAR_SIDEBAR = 'lcss';
-    const LAYOUT_SIDEBAR_CONTENT_SIDEBAR = 'lscs';
-    const LAYOUT_SIDEBAR_SIDEBAR_CONTENT = 'lssc';
+    const LAYOUT_FULL_WIDTH = 'jankx-fw';
+    const LAYOUT_CONTENT_SIDEBAR = 'jankx-cs';
+    const LAYOUT_SIDEBAR_CONTENT = 'jankx-sc';
+    const LAYOUT_CONTENT_SIDEBAR_SIDEBAR = 'jankx-css';
+    const LAYOUT_SIDEBAR_CONTENT_SIDEBAR = 'jankx-lscs';
+    const LAYOUT_SIDEBAR_SIDEBAR_CONTENT = 'jankx-ssc';
 
     protected $currentLayout;
     protected static $instance;
@@ -107,10 +107,10 @@ class SiteLayout
                 $post_id = isset($_GET['post']) ? (int)$_GET['post'] : 0;
                 return get_post_meta($post_id, PostLayout::POST_LAYOUT_META_KEY, true);
             }
-        } else {
-            if (is_singular()) {
-                return get_post_meta(get_the_ID(), PostLayout::POST_LAYOUT_META_KEY, true);
-            }
+        }
+
+        if (is_singular()) {
+            return get_post_meta(get_the_ID(), PostLayout::POST_LAYOUT_META_KEY, true);
         }
     }
 

@@ -1,7 +1,7 @@
 <?php
 namespace Jankx\SiteLayout\Admin\Metabox;
 
-use Jankx;
+use Jankx\SiteLayout\SiteLayout;
 
 class PostLayout
 {
@@ -33,10 +33,12 @@ class PostLayout
 
     public function render()
     {
-        $currentLayout = Jankx::getLayout();
-        $layouts       = Jankx::getSupportLayouts();
+        $siteLayout    = SiteLayout::getInstance();
+        $currentLayout = $siteLayout->getLayout();
+        $layouts       = $siteLayout->getSupportLayouts();
         $metaKey       = self::POST_LAYOUT_META_KEY;
         $templateFile  = sprintf('%s/templates/metabox.php', JANKX_SITE_LAYOUT_DIR);
+
         require_once $templateFile;
     }
 

@@ -73,12 +73,12 @@ class SiteLayout
     public function getSupportLayouts()
     {
         $layouts = apply_filters('jankx_support_site_layouts', array(
-            self::LAYOUT_FULL_WIDTH              => __('Full Width', 'jankx'),
-            self::LAYOUT_CONTENT_SIDEBAR         => __('Content Sidebar', 'jankx'),
-            self::LAYOUT_SIDEBAR_CONTENT         => __('Sidebar Content', 'jankx'),
-            self::LAYOUT_CONTENT_SIDEBAR_SIDEBAR => __('Content Sidebar Sidebar', 'jankx'),
-            self::LAYOUT_SIDEBAR_CONTENT_SIDEBAR => __('Sidebar Content Sidebar', 'jankx'),
-            self::LAYOUT_SIDEBAR_SIDEBAR_CONTENT => __('Sidebar Sidebar Content', 'jankx'),
+            static::LAYOUT_FULL_WIDTH              => __('Full Width', 'jankx'),
+            static::LAYOUT_CONTENT_SIDEBAR         => __('Content Sidebar', 'jankx'),
+            static::LAYOUT_SIDEBAR_CONTENT         => __('Sidebar Content', 'jankx'),
+            static::LAYOUT_CONTENT_SIDEBAR_SIDEBAR => __('Content Sidebar Sidebar', 'jankx'),
+            static::LAYOUT_SIDEBAR_CONTENT_SIDEBAR => __('Sidebar Content Sidebar', 'jankx'),
+            static::LAYOUT_SIDEBAR_SIDEBAR_CONTENT => __('Sidebar Sidebar Content', 'jankx'),
         ));
 
         return $layouts;
@@ -90,16 +90,16 @@ class SiteLayout
             return $this->currentLayout;
         }
 
-        $this->currentLayout = $this->detectLayout();
+        $this->currentLayout = $this->getCurrentLayout();
 
         if (empty($this->currentLayout)) {
-            $this->currentLayout = $this->defaultLayout();
+            $this->currentLayout = $this->getDefaultLayout();
         }
 
         return apply_filters('jankx_get_layout', $this->currentLayout);
     }
 
-    public function detectLayout()
+    public function getCurrentLayout()
     {
         if (is_admin()) {
             $currentScreen = get_current_screen();
@@ -114,8 +114,8 @@ class SiteLayout
         }
     }
 
-    public function defaultLayout()
+    public function getDefaultLayout()
     {
-        return apply_filters('jankx_default_site_layout', 'lcs');
+        return apply_filters('jankx_default_site_layout', static::LAYOUT_CONTENT_SIDEBAR);
     }
 }

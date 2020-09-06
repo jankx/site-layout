@@ -5,7 +5,6 @@ use Jankx\SiteLayout\SiteLayout;
 
 class PostLayout
 {
-    const POST_LAYOUT_METABOX_ID = 'jankx-post-layout';
     const POST_LAYOUT_META_KEY = 'jankx_post_layout';
 
     protected $supportPostTypes;
@@ -22,7 +21,7 @@ class PostLayout
     public function addMetabox()
     {
         add_meta_box(
-            self::POST_LAYOUT_METABOX_ID,
+            self::POST_LAYOUT_META_KEY,
             __('Post Layouts', 'jankx'),
             array($this, 'render'),
             $this->supportPostTypes,

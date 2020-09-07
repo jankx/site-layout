@@ -118,4 +118,30 @@ class SiteLayout
     {
         return apply_filters('jankx_default_site_layout', static::LAYOUT_CONTENT_SIDEBAR);
     }
+
+
+    public function registerSidebars()
+    {
+        $primaryArgs = apply_filters('jankx_site_layout_primary_sidebar_args', array(
+            'id' => 'primary',
+            'name' => __('Primary Sidebar', 'jankx'),
+            'before_widget' => '<section id="%1$s" class="widget jankx-widget %2$s">',
+            'after_widget' => '</section>',
+            'before_title' => '<h3 class="jankx-title widget-title">',
+            'after_title' => '</h3>'
+        ));
+        register_sidebar($primaryArgs);
+
+        if (apply_filters('jankx_site_layout_enable_alt_sidebar', true)) {
+            $secondaryArgs = apply_filters('jankx_site_layout_secondary_sidebar_args', array(
+                'id' => 'secondary',
+                'name' => __('Secondary Sidebar', 'jankx'),
+                'before_widget' => '<section id="%1$s" class="widget jankx-widget %2$s">',
+                'after_widget' => '</section>',
+                'before_title' => '<h3 class="jankx-title widget-title">',
+                'after_title' => '</h3>'
+            ));
+            register_sidebar($secondaryArgs);
+        }
+    }
 }

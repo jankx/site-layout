@@ -13,7 +13,7 @@ class SiteLayout
     const LAYOUT_CONTENT_SIDEBAR         = 'jankx-cs';
     const LAYOUT_SIDEBAR_CONTENT         = 'jankx-sc';
     const LAYOUT_CONTENT_SIDEBAR_SIDEBAR = 'jankx-css';
-    const LAYOUT_SIDEBAR_CONTENT_SIDEBAR = 'jankx-lscs';
+    const LAYOUT_SIDEBAR_CONTENT_SIDEBAR = 'jankx-scs';
     const LAYOUT_SIDEBAR_SIDEBAR_CONTENT = 'jankx-ssc';
 
     protected $currentLayout;

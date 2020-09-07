@@ -2,6 +2,7 @@
 namespace Jankx\SiteLayout;
 
 use Jankx\SiteLayout\SiteLayout;
+use Jankx\Template\Page;
 
 class TemplateLoader
 {
@@ -11,12 +12,16 @@ class TemplateLoader
 
     public function __construct($layout, $engine)
     {
+        // Get Jankx Page instance
+        $page = Page::getInstance();
+
         $this->layout = $layout;
         $this->engine = $engine;
+
         $this->fullContent = (
             $layout === SiteLayout::LAYOUT_FULL_WIDTH ||
-            ( is_int(strpos($engine->rootDirectory, 'plugins/elementor'))
-                && $engine->baseTemplate === 'header-footer'
+            ( is_int(strpos($page->getTemplateFile(), 'plugins/elementor'))
+                && $page->getBaseFileName() === 'header-footer.php'
             )
         );
     }

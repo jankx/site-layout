@@ -2,7 +2,9 @@
   "name": "jankx/site-layout",
   "description": "The best way to create multi site layouts and management layouts",
   "type": "library",
-  "require": {},
+  "require": {
+    "jankx/template": "dev-master"
+  },
   "license": "MIT",
   "minimum-stability": "dev",
   "authors": [

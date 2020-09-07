@@ -1,7 +1,8 @@
 <?php
 namespace Jankx\SiteLayout;
 
-use Jankx\SiteLayout\Admin\SiteLayout as SiteLayoutAdmin;
+use Jankx\Template\Template;
+use Jankx\Template\Engine\EngineManager;
 use Jankx\SiteLayout\Admin\Metabox\PostLayout;
 
 use function get_current_screen;
@@ -43,23 +44,26 @@ class SiteLayout
     protected function loadFeatures()
     {
         if (is_admin()) {
-            new SiteLayoutAdmin();
+            new Admin();
         }
     }
 
     protected function initHooks()
     {
         add_filter('body_class', array($this, 'bodyClasses'));
+        add_action('jankx_call_page_template', array($this, 'buildLayout'));
     }
 
-    public function buildLayout($engine)
+    public function buildLayout($page)
     {
         /**
          * Load template for site layout
          */
         $templateLoader = new TemplateLoader(
             $this->getLayout(),
-            $engine
+            EngineManager::getEngine(
+                Template::getDefaultLoader()
+            )
         );
         $templateLoader->load();
     }

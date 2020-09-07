@@ -3,7 +3,7 @@ namespace Jankx\SiteLayout;
 
 use Jankx\SiteLayout\Admin\Metabox\PostLayout;
 
-class SiteLayout
+class Admin
 {
     protected $postLayout;
 
@@ -11,6 +11,7 @@ class SiteLayout
     public function __construct()
     {
         $this->postLayout = new PostLayout();
+
         $this->initHooks();
     }
 

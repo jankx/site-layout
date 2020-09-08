@@ -28,9 +28,9 @@ class FooterBuilder
         // Make footer widget sidebar has same structure
         $footerWidgetSidebarArgs = apply_filters('jankx_template_footer_widget_args', array(
             'before_widget' => '<div id="%1$s" class="widget %2$s">',
-            'after_widget' => '</div>',
-            'before_title' => '<h3 class="jankx-title widget-title">',
-            'after_title' => '</h3>'
+            'after_widget'  => '</div>',
+            'before_title'  => '<h3 class="jankx-title widget-title">',
+            'after_title'   => '</h3>'
         ));
 
         $currentSidebarIndex = 1;
@@ -39,8 +39,8 @@ class FooterBuilder
             $footerWidgetSidebarArgs = array_merge(
                 $footerWidgetSidebarArgs,
                 array(
-                    'id' => sprintf('footer_%d', $currentSidebarIndex),
-                    'name' => sprintf(__('Footer %d', 'jankx'), $currentSidebarIndex),
+                    'id'          => sprintf('footer_%d', $currentSidebarIndex),
+                    'name'        => sprintf(__('Footer %d', 'jankx'), $currentSidebarIndex),
                     'description' => sprintf('The widgets are show in the footer area #%d', $currentSidebarIndex)
                 )
             );

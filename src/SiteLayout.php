@@ -1,9 +1,10 @@
 <?php
 namespace Jankx\SiteLayout;
 
-use Jankx\Template\Template;
 use Jankx\Template\Engine\EngineManager;
 use Jankx\SiteLayout\Admin\Metabox\PostLayout;
+use Jankx\Template\Page;
+use Jankx\Template\Template;
 
 use function get_current_screen;
 
@@ -46,6 +47,12 @@ class SiteLayout
     {
         $footerBuilder = new FooterBuilder();
         $footerBuilder->build();
+
+        /**
+         * Integration with other plugins
+         */
+        $integrationPlugins = new IntegrationPlugins();
+        $integrationPlugins->integrate();
 
         if (is_admin()) {
             new Admin();
@@ -104,11 +111,16 @@ class SiteLayout
             $this->currentLayout = $this->getDefaultLayout();
         }
 
-        return apply_filters('jankx_get_layout', $this->currentLayout);
+        return apply_filters('jankx_template_get_site_layout', $this->currentLayout);
     }
 
     public function getCurrentLayout()
     {
+        $pre = apply_filters('jankx_template_pre_get_current_site_layout', null);
+        if (!empty($pre)) {
+            return $pre;
+        }
+
         if (is_admin()) {
             $currentScreen = get_current_screen();
             if ($currentScreen->base === 'post') {
@@ -124,7 +136,7 @@ class SiteLayout
 
     public function getDefaultLayout()
     {
-        return apply_filters('jankx_default_site_layout', static::LAYOUT_CONTENT_SIDEBAR);
+        return apply_filters('jankx_template_default_site_layout', static::LAYOUT_CONTENT_SIDEBAR);
     }
 
 

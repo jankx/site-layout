@@ -2,7 +2,6 @@
 namespace Jankx\SiteLayout;
 
 use Jankx\SiteLayout\SiteLayout;
-use Jankx\Template\Page;
 
 class TemplateLoader
 {
@@ -12,18 +11,8 @@ class TemplateLoader
 
     public function __construct($layout, $engine)
     {
-        // Get Jankx Page instance
-        $page = Page::getInstance();
-
         $this->layout = $layout;
         $this->engine = $engine;
-
-        $this->fullContent = (
-            $layout === SiteLayout::LAYOUT_FULL_WIDTH ||
-            ( is_int(strpos($page->getTemplateFile(), 'plugins/elementor'))
-                && $page->getBaseFileName() === 'header-footer.php'
-            )
-        );
     }
 
     /**
@@ -118,7 +107,7 @@ class TemplateLoader
 
     protected function buildSidebarLayout()
     {
-        if ($this->fullContent) {
+        if ($this->layout === SiteLayout::LAYOUT_FULL_WIDTH) {
             return;
         }
 

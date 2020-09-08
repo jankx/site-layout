@@ -58,7 +58,7 @@ class LayoutLoader
         $attributes = apply_filters('jankx_tag_main_content_sidebar_attributes', array(
             'class' => 'jankx-wrapper main-content-sidebar'
         ));
-        printf('<section %s>', $this->buildAttributes($attributes));
+        printf('<div %s>', $this->buildAttributes($attributes));
     }
 
     public function beforeMainContentAndSidebar()
@@ -83,7 +83,7 @@ class LayoutLoader
 
     public function closeMainContentSidebarWrap()
     {
-        echo '</section>';
+        echo '</div>';
     }
     // End base layout for Jankx Framework
 

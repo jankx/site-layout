@@ -3,7 +3,7 @@ namespace Jankx\SiteLayout;
 
 use Jankx\SiteLayout\SiteLayout;
 
-class TemplateLoader
+class LayoutLoader
 {
     protected $layout;
     protected $engine;
@@ -25,6 +25,8 @@ class TemplateLoader
         $this->buildBaseLayout();
         $this->buildMainContentWrap();
         $this->buildSidebarLayout();
+
+        do_action('jankx_template_build_site_layout', $this);
     }
 
     protected function buildBaseLayout()

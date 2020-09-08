@@ -70,13 +70,13 @@ class SiteLayout
         /**
          * Load template for site layout
          */
-        $templateLoader = new TemplateLoader(
+        $layoutLoader = new LayoutLoader(
             $this->getLayout(),
             EngineManager::getEngine(
                 Template::getDefaultLoader()
             )
         );
-        $templateLoader->load();
+        $layoutLoader->load();
     }
 
     public function bodyClasses($classes)

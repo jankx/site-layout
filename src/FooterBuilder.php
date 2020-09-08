@@ -3,14 +3,33 @@ namespace Jankx\SiteLayout;
 
 class FooterBuilder
 {
+    protected static $numOfFooterWidgets;
+
     public function build()
     {
         add_action('widgets_init', array($this, 'registerSidebars'), 30);
+
+        add_action('jankx_template_before_footer_widgets', array($this, 'openFooterWidgetAreas'));
+        add_action('jankx_template_footer_widgets', array($this, 'render'));
+        add_action('jankx_template_after_footer_widgets', array($this, 'closeFooterWidgetAreas'));
+
+        add_action('wp_enqueue_scripts', array($this, 'generateFooterWidgetStyles'));
+    }
+
+    public static function getNumOfFooterWidgets()
+    {
+        if (!is_null(static::$numOfFooterWidgets)) {
+            return static::$numOfFooterWidgets;
+        }
+        static::$numOfFooterWidgets = apply_filters('jankx_template_num_of_footer_widgets', 4);
+
+        // Return the number of the footer widgets
+        return static::$numOfFooterWidgets;
     }
 
     public function registerSidebars()
     {
-        $numOfFooterWidgets = apply_filters('jankx_template_num_of_footer_widgets', 4);
+        $numOfFooterWidgets = static::getNumOfFooterWidgets();
 
         /**
          * Disable footer widget when the number of it is larger
@@ -54,5 +73,52 @@ class FooterBuilder
             ));
             $currentSidebarIndex += 1;
         }
+    }
+
+    public function openFooterWidgetAreas()
+    {
+        jankx_template('footer/open-widget-areas', array(
+            'footer_widget_classes' => implode(' ', (array)apply_filters(
+                'jankx_template_footer_widget_wrapper_class',
+                array('jankx-footer-widgets-area')
+            ))));
+    }
+
+    public function closeFooterWidgetAreas()
+    {
+        jankx_template('footer/close-widget-areas');
+    }
+
+    public function render()
+    {
+        $numOfFooterWidgets = static::getNumOfFooterWidgets();
+        // Do not render anything when footer widgets area is disable
+        if ($numOfFooterWidgets <= 0) {
+            return;
+        }
+        $currentSidebarIndex = 1;
+
+        do_action('jankx_template_before_footer_widgets');
+        while ($currentSidebarIndex <= $numOfFooterWidgets) {
+            jankx_template(array(
+                "footer/widget-areas/area-{$currentSidebarIndex}",
+                'footer/widget-areas/general'
+            ), array(
+                'index' => $currentSidebarIndex,
+            ));
+            $currentSidebarIndex += 1;
+        }
+        do_action('jankx_template_after_footer_widgets');
+    }
+
+    public function generateFooterWidgetStyles()
+    {
+        $numOfFooterWidgets = static::getNumOfFooterWidgets();
+        // Disable footer widgets when the num of it less than and equal 0
+        if ($numOfFooterWidgets <= 0) {
+            return;
+        }
+
+        jankx_template('footer/styles', compact('numOfFooterWidgets'), null, false);
     }
 }

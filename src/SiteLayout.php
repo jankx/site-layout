@@ -16,8 +16,9 @@ class SiteLayout
     const LAYOUT_SIDEBAR_CONTENT_SIDEBAR = 'jankx-scs';
     const LAYOUT_SIDEBAR_SIDEBAR_CONTENT = 'jankx-ssc';
 
-    protected $currentLayout;
     protected static $instance;
+
+    protected $currentLayout;
 
     public static function getInstance()
     {
@@ -43,6 +44,9 @@ class SiteLayout
 
     protected function loadFeatures()
     {
+        $footerBuilder = new FooterBuilder();
+        $footerBuilder->build();
+
         if (is_admin()) {
             new Admin();
         }

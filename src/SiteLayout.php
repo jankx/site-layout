@@ -18,6 +18,7 @@ class SiteLayout
     const LAYOUT_SIDEBAR_SIDEBAR_CONTENT = 'jankx-ssc';
 
     protected static $instance;
+    protected static $sidebarName;
 
     protected $currentLayout;
 
@@ -43,6 +44,14 @@ class SiteLayout
         $this->initHooks();
     }
 
+    public static function getSidebarName($name = null)
+    {
+        if (is_null($name)) {
+            return static::$sidebarName;
+        }
+        static::$sidebarName = $name;
+    }
+
     protected function loadFeatures()
     {
         $footerBuilder = new FooterBuilder();
@@ -61,6 +70,7 @@ class SiteLayout
 
     protected function initHooks()
     {
+        add_action('get_sidebar', array(SiteLayout::class, 'getSidebarName'));
         add_filter('body_class', array($this, 'bodyClasses'));
         add_action('jankx_call_page_template', array($this, 'buildLayout'));
     }
@@ -138,7 +148,6 @@ class SiteLayout
     {
         return apply_filters('jankx_template_default_site_layout', static::LAYOUT_CONTENT_SIDEBAR);
     }
-
 
     public function registerSidebars()
     {

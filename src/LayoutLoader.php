@@ -40,25 +40,13 @@ class LayoutLoader
         add_action('jankx_template_before_footer', array($this, 'closeMainContentSidebarWrap'), 3);
     }
 
-    protected function buildAttributes($attributes)
-    {
-        if (!is_array($attributes)) {
-            return '';
-        }
-        $attributes_str = '';
-        foreach ($attributes as $attribute => $value) {
-            $attributes_str .= sprintf('%s="%s" ', $attribute, $value);
-        }
-        return rtrim($attributes_str);
-    }
-
     // Start base layout for Jankx Framework
     public function openMainContentSidebarWrap()
     {
         $attributes = apply_filters('jankx_tag_main_content_sidebar_attributes', array(
             'class' => 'jankx-wrapper main-content-sidebar'
         ));
-        printf('<div %s>', $this->buildAttributes($attributes));
+        printf('<div %s>', jankx_generate_html_attributes($attributes));
         jankx_template('layout/content-sidebar-open.php');
     }
 
@@ -101,7 +89,7 @@ class LayoutLoader
             'id' => 'jankx-main-content',
             'class' => 'main-content'
         ));
-        printf('<main %s>', $this->buildAttributes($attributes));
+        printf('<main %s>', jankx_generate_html_attributes($attributes));
     }
 
     public function closeMainContent()

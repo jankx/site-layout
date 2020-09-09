@@ -119,6 +119,7 @@ class FooterBuilder
             return;
         }
 
+        // Load footer styles and don't echo by set 4 argument value is `false`
         jankx_template('footer/styles', compact('numOfFooterWidgets'), null, false);
     }
 }

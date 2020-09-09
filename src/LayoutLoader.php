@@ -59,6 +59,7 @@ class LayoutLoader
             'class' => 'jankx-wrapper main-content-sidebar'
         ));
         printf('<div %s>', $this->buildAttributes($attributes));
+        jankx_template('layout/content-sidebar-open.php');
     }
 
     public function beforeMainContentAndSidebar()
@@ -83,6 +84,7 @@ class LayoutLoader
 
     public function closeMainContentSidebarWrap()
     {
+        jankx_template('layout/content-sidebar-close.php');
         echo '</div>';
     }
     // End base layout for Jankx Framework

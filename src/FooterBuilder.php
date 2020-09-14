@@ -81,7 +81,7 @@ class FooterBuilder
             'footer_widget_classes' => implode(' ', (array)apply_filters(
                 'jankx_template_footer_widget_wrapper_class',
                 array('jankx-footer-widgets-area')
-            ))));
+        ))));
     }
 
     public function closeFooterWidgetAreas()
@@ -101,8 +101,8 @@ class FooterBuilder
         do_action('jankx_template_before_footer_widgets');
         while ($currentSidebarIndex <= $numOfFooterWidgets) {
             jankx_template(array(
-                "footer/widget-areas/area-{$currentSidebarIndex}",
-                'footer/widget-areas/general'
+                "layout/footer/widget-areas/area-{$currentSidebarIndex}",
+                'layout/footer/widget-areas/general'
             ), array(
                 'index' => $currentSidebarIndex,
             ));

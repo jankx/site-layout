@@ -77,7 +77,7 @@ class FooterBuilder
 
     public function openFooterWidgetAreas()
     {
-        jankx_template('footer/open-widget-areas', array(
+        jankx_template('layout/footer/open-widget-areas', array(
             'footer_widget_classes' => implode(' ', (array)apply_filters(
                 'jankx_template_footer_widget_wrapper_class',
                 array('jankx-footer-widgets-area')
@@ -86,7 +86,7 @@ class FooterBuilder
 
     public function closeFooterWidgetAreas()
     {
-        jankx_template('footer/close-widget-areas');
+        jankx_template('layout/footer/close-widget-areas');
     }
 
     public function render()
@@ -120,6 +120,6 @@ class FooterBuilder
         }
 
         // Load footer styles and don't echo by set 4 argument value is `false`
-        jankx_template('footer/styles', compact('numOfFooterWidgets'), null, false);
+        jankx_template('layout/footer/styles', compact('numOfFooterWidgets'), null, false);
     }
 }

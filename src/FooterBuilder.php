@@ -81,7 +81,7 @@ class FooterBuilder
             'footer_widget_classes' => implode(' ', (array)apply_filters(
                 'jankx_template_footer_widget_wrapper_class',
                 array('jankx-footer-widgets-area')
-        ))));
+            ))));
     }
 
     public function closeFooterWidgetAreas()

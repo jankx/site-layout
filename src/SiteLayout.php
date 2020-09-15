@@ -70,9 +70,19 @@ class SiteLayout
 
     protected function initHooks()
     {
-        add_action('get_sidebar', array(SiteLayout::class, 'getSidebarName'));
-        add_filter('body_class', array($this, 'bodyClasses'));
+        add_action('after_setup_theme', array($this, 'registeMenus'));
+        add_action('widgets_init', array($this, 'registerSidebars'), 5);
         add_action('jankx_call_page_template', array($this, 'buildLayout'));
+        add_action('get_sidebar', array(SiteLayout::class, 'getSidebarName'));
+
+        add_filter('body_class', array($this, 'bodyClasses'));
+    }
+
+    public function registeMenus()
+    {
+        register_nav_menus(apply_filters('jankx_site_layout_register_menus', array(
+            'primary' => __('Primary Menu', 'jankx'),
+        )));
     }
 
     public function buildLayout($page)

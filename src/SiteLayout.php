@@ -156,7 +156,10 @@ class SiteLayout
 
     public function getDefaultLayout()
     {
-        return apply_filters('jankx_template_default_site_layout', static::LAYOUT_CONTENT_SIDEBAR);
+        return apply_filters(
+            'jankx_template_default_site_layout',
+            static::LAYOUT_FULL_WIDTH
+        );
     }
 
     public function registerSidebars()

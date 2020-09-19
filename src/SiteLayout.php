@@ -5,6 +5,7 @@ use Jankx\Template\Engine\EngineManager;
 use Jankx\SiteLayout\Admin\Metabox\PostLayout;
 use Jankx\Template\Page;
 use Jankx\Template\Template;
+use Jankx\SiteLayout\Menu\JankxItems;
 
 use function get_current_screen;
 
@@ -21,6 +22,7 @@ class SiteLayout
     protected static $sidebarName;
 
     protected $currentLayout;
+    protected $menu;
 
     public static function getInstance()
     {
@@ -63,6 +65,8 @@ class SiteLayout
         $integrationPlugins = new IntegrationPlugins();
         $integrationPlugins->integrate();
 
+        $this->menu = new JankxItems();
+
         if (is_admin()) {
             new Admin();
         }
@@ -73,7 +77,9 @@ class SiteLayout
         add_action('after_setup_theme', array($this, 'registeMenus'));
         add_action('widgets_init', array($this, 'registerSidebars'), 5);
         add_action('jankx_call_page_template', array($this, 'buildLayout'));
+
         add_action('get_sidebar', array(SiteLayout::class, 'getSidebarName'));
+        add_action('after_setup_theme', array($this->menu, 'register'));
 
         add_filter('body_class', array($this, 'bodyClasses'));
     }

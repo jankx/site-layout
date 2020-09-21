@@ -17,8 +17,13 @@ class JankxItems
     public function register()
     {
         add_filter('manage_nav-menus_columns', array($this, 'add_item_subtitle'), 15);
+        add_filter('manage_nav-menus_columns', array($this, 'hide_jankx_columns'), 25);
+
         add_action('wp_nav_menu_item_custom_fields', array($this, 'add_custom_subtitle_field'), 10, 5);
+        add_action('wp_nav_menu_item_custom_fields', array($this, 'add_custom_subtitle_position'), 10, 5);
+
         add_action('save_post', array($this, 'save_subtile_metadata'), 10, 2);
+        add_action('save_post', array($this, 'save_subtile_position'), 10, 2);
 
         add_action('admin_head-nav-menus.php', array( $this, 'add_menu_meta_boxes' ));
         add_filter('wp_setup_nav_menu_item', array($this, 'setup_jankx_items'));
@@ -164,6 +169,24 @@ class JankxItems
         $columns = array_merge($columns, array(
             'subtitle' => __('Jankx Subtitle', 'jankx'),
         ));
+
+        if (false === get_user_option('managenav-menuscolumnshidden')) {
+            $user = wp_get_current_user();
+            update_user_option(
+                $user->ID,
+                'managenav-menuscolumnshidden',
+                array(
+                    0 => 'link-target',
+                    1 => 'css-classes',
+                    2 => 'xfn',
+                    3 => 'description',
+                    4 => 'title-attribute',
+                    5 => 'subtitle',
+                ),
+                true
+            );
+        }
+
         return $columns;
     }
 
@@ -171,7 +194,7 @@ class JankxItems
     {
         $subtitle = get_post_meta($item_id, '_jankx_menu_item_subtitle', true);
         ?>
-        <p class="jankx-field description description-wide">
+        <p class="field-subtitle description description-wide">
             <label for="edit-menu-item-subtitle-<?php echo $item_id; ?>">
                 <?php _e('Jankx Subtitle', 'jankx'); ?><br>
                 <input
@@ -189,6 +212,29 @@ class JankxItems
         <?php
     }
 
+    public function add_custom_subtitle_position($item_id, $item, $depth, $args, $id)
+    {
+        $subtitle_position = get_post_meta($item_id, '_jankx_menu_item_subtitle_position', true);
+        $options = array(
+            '' => __('Default'),
+            'top' => __('Top'),
+            'bottom' => __('Bottom')
+        );
+        ?>
+        <p class="field-subtitle description-wide">
+            <label for="edit-menu-item-title-23019">
+                <?php _e('Subtitle position', 'jankx'); ?>
+                <select name="menu-item-subtitle-position[<?php echo $item->ID; ?>] id=">
+                    <?php foreach ($options as $key => $value) : ?>
+                    <option value="<?php echo $key ?>"<?php selected($key, $subtitle_position); ?>><?php echo esc_html($value); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </label>
+
+        </p>
+        <?php
+    }
+
     public function save_subtile_metadata()
     {
         if (empty($_POST['menu-item-subtitle'])) {
@@ -202,6 +248,22 @@ class JankxItems
                 continue;
             }
             update_post_meta($post_ID, '_jankx_menu_item_subtitle', $subtitle);
+        }
+    }
+
+    public function save_subtile_position()
+    {
+        if (empty($_POST['menu-item-subtitle-position'])) {
+            return;
+        }
+        $subtitles = array_filter($_POST['menu-item-subtitle-position']);
+
+        foreach ($subtitles as $post_ID => $subtitle) {
+            $menuItem = get_post($post_ID);
+            if (!$menuItem || $menuItem->post_type !== 'nav_menu_item') {
+                continue;
+            }
+            update_post_meta($post_ID, '_jankx_menu_item_subtitle_position', $subtitle);
         }
     }
 }

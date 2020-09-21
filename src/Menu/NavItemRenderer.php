@@ -3,6 +3,7 @@ namespace Jankx\SiteLayout\Menu;
 
 use Jankx\Option\Option;
 use Jankx\SiteLayout\Menu\JankxItems;
+use Medoid_Image;
 
 class NavItemRenderer
 {
@@ -22,12 +23,13 @@ class NavItemRenderer
         // Create a flag logo is added
         $this->logo_is_added = true;
 
-        $logoType = Option::get('logo_type', 'image');
+        $custom_logo_id = get_theme_mod('custom_logo');
+        $logo = wp_get_attachment_image_src($custom_logo_id, 'full');
 
         return jankx_component('logo', array(
-            'type' => $logoType,
+            'type' => has_custom_logo() > 0 ? 'image' : 'text',
             'text' => $item->post_title,
-            'image_url' => Option::get('logo_image_url'),
+            'image_url' => isset($logo[0]) && is_a($logo[0], Medoid_Image::class) ? (string)$logo[0] : '',
         ));
     }
 
@@ -79,8 +81,12 @@ class NavItemRenderer
     public function renderMenuItemSubtitle($title, $item, $args, $depth)
     {
         $subtitle = get_post_meta($item->ID, '_jankx_menu_item_subtitle', true);
+        $subtitle_position = get_post_meta($item->ID, '_jankx_menu_item_subtitle_position', true);
         if (!$subtitle) {
             return $title;
+        }
+        if ($subtitle_position === 'top') {
+            return sprintf('<span class="jankx-subtitle menu-item-subtitle">%s</span>%s', $title, $subtitle);
         }
         return sprintf('%s<span class="jankx-subtitle menu-item-subtitle">%s</span>', $title, $subtitle);
     }

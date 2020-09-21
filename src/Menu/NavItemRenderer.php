@@ -7,6 +7,7 @@ use Jankx\SiteLayout\Menu\JankxItems;
 class NavItemRenderer
 {
     protected $hook_walker_nav_menu_start_el_is_called;
+    protected $logo_is_added;
 
     public function resetWalkerSupportHookStartEl($sorted_menu_items)
     {
@@ -16,8 +17,11 @@ class NavItemRenderer
         return $sorted_menu_items;
     }
 
-    public function getJankxLogo($item, $depth, $args)
+    public function getJankxLogo($item, $depth = 0, $args = array())
     {
+        // Create a flag logo is added
+        $this->logo_is_added = true;
+
         $logoType = Option::get('logo_type', 'image');
 
         return jankx_component('logo', array(
@@ -79,5 +83,26 @@ class NavItemRenderer
             return $title;
         }
         return sprintf('%s<span class="jankx-subtitle menu-item-subtitle">%s</span>', $title, $subtitle);
+    }
+
+    public function checkLogoIsAdded()
+    {
+        return (bool)$this->logo_is_added;
+    }
+
+    public function unsupportSiteLogoInPrimaryMenu($items, $args)
+    {
+        if ($args->theme_location !== 'primary') {
+            return $items;
+        }
+
+        $item = new \StdClass();
+        $item->post_title = get_bloginfo('name');
+
+        return sprintf(
+            '<li id="menu-item-customm-jankx-logo" class="menu-item menu-item-type-jankx-logo menu-item-logo">%s</li>%s',
+            $this->getJankxLogo($item),
+            $items,
+        );
     }
 }

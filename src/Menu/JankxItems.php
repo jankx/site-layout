@@ -26,6 +26,10 @@ class JankxItems
         add_filter('wp_nav_menu_objects', array($this->renderer, 'resetWalkerSupportHookStartEl'));
         add_filter('walker_nav_menu_start_el', array($this->renderer, 'renderMenuItem'), 10, 4);
         add_filter('nav_menu_item_title', array($this->renderer, 'renderMenuItemSubtitle'), 10, 4);
+
+        if (!$this->renderer->checkLogoIsAdded()) {
+            add_filter('wp_nav_menu_items', array($this->renderer, 'unsupportSiteLogoInPrimaryMenu'), 10, 2);
+        }
     }
 
     public function add_menu_meta_boxes()

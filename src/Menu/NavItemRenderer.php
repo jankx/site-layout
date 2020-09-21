@@ -19,10 +19,18 @@ class NavItemRenderer
     public function getJankxLogo($item, $depth, $args)
     {
         $logoType = Option::get('logo_type', 'image');
+
         return jankx_component('logo', array(
             'type' => $logoType,
             'text' => $item->post_title,
             'image_url' => Option::get('logo_image_url'),
+        ));
+    }
+
+    public function getJankxSearchForm($item, $depth, $args)
+    {
+        return get_search_form(array(
+            'echo' => false,
         ));
     }
 

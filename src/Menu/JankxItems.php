@@ -62,6 +62,8 @@ class JankxItems
         $title = '';
         if ($key === 'jankx-logo') {
             $title = get_bloginfo('name');
+        } elseif ($key === 'jankx-search-form') {
+            $title = static::$jankxNavItems[$key];
         }
 
         $item = wp_parse_args(array(), array(

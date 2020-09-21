@@ -17,7 +17,6 @@ class JankxItems
     public function register()
     {
         add_filter('manage_nav-menus_columns', array($this, 'add_item_subtitle'), 15);
-        add_filter('manage_nav-menus_columns', array($this, 'hide_jankx_columns'), 25);
 
         add_action('wp_nav_menu_item_custom_fields', array($this, 'add_custom_subtitle_field'), 10, 5);
         add_action('wp_nav_menu_item_custom_fields', array($this, 'add_custom_subtitle_position'), 10, 5);
@@ -169,24 +168,6 @@ class JankxItems
         $columns = array_merge($columns, array(
             'subtitle' => __('Jankx Subtitle', 'jankx'),
         ));
-
-        if (false === get_user_option('managenav-menuscolumnshidden')) {
-            $user = wp_get_current_user();
-            update_user_option(
-                $user->ID,
-                'managenav-menuscolumnshidden',
-                array(
-                    0 => 'link-target',
-                    1 => 'css-classes',
-                    2 => 'xfn',
-                    3 => 'description',
-                    4 => 'title-attribute',
-                    5 => 'subtitle',
-                ),
-                true
-            );
-        }
-
         return $columns;
     }
 

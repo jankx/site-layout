@@ -85,10 +85,20 @@ class NavItemRenderer
         if (!$subtitle) {
             return $title;
         }
-        if ($subtitle_position === 'top') {
-            return sprintf('<span class="jankx-subtitle menu-item-subtitle">%s</span>%s', $subtitle, $title);
+        if (!$subtitle_position) {
+            $subtitle_position = 'bottom';
         }
-        return sprintf('%s<span class="jankx-subtitle menu-item-subtitle">%s</span>', $title, $subtitle);
+        
+        if ($subtitle_position === 'top') {
+            return sprintf(
+                '<span class="jankx-subtitle position-%s menu-item-subtitle">%s</span>%s',
+                $subtitle, $subtitle_position, $title
+            );
+        }
+        return sprintf(
+            '%s<span class="jankx-subtitle position-%s menu-item-subtitle">%s</span>',
+            $title, $subtitle_position, $subtitle
+        );
     }
 
     public function checkLogoIsAdded()

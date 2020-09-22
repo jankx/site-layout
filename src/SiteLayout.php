@@ -113,6 +113,9 @@ class SiteLayout
 
     public function bodyClasses($classes)
     {
+        if (!apply_filters('jankx_template_disable_base_css', false)) {
+            $classes[] = 'jankx-base';
+        }
         $classes[] = $this->getLayout();
         return $classes;
     }

@@ -43,10 +43,10 @@ class LayoutLoader
     // Start base layout for Jankx Framework
     public function openMainContentSidebarWrap()
     {
-        $attributes = apply_filters('jankx_tag_main_content_sidebar_attributes', array(
-            'class' => 'jankx-wrapper main-content-sidebar'
+        jankx_open_container(array(
+            'jankx-wrapper',
+            'main-content-sidebar'
         ));
-        printf('<div %s>', jankx_generate_html_attributes($attributes));
         jankx_template('layout/content-sidebar-open.php');
     }
 

@@ -197,7 +197,9 @@ class JankxItems
         $options = array(
             '' => __('Default'),
             'top' => __('Top'),
-            'bottom' => __('Bottom')
+            'bottom' => __('Bottom'),
+            'before' => __('Before'),
+            'before' => __('After'),
         );
         ?>
         <p class="field-subtitle description-wide">

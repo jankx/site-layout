@@ -86,7 +86,7 @@ class NavItemRenderer
             return $title;
         }
         if ($subtitle_position === 'top') {
-            return sprintf('<span class="jankx-subtitle menu-item-subtitle">%s</span>%s', $title, $subtitle);
+            return sprintf('<span class="jankx-subtitle menu-item-subtitle">%s</span>%s', $subtitle, $title);
         }
         return sprintf('%s<span class="jankx-subtitle menu-item-subtitle">%s</span>', $title, $subtitle);
     }
@@ -98,7 +98,7 @@ class NavItemRenderer
 
     public function unsupportSiteLogoInPrimaryMenu($items, $args)
     {
-        if ($args->theme_location !== 'primary') {
+        if ($this->checkLogoIsAdded() || $args->theme_location !== 'primary') {
             return $items;
         }
 

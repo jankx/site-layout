@@ -81,7 +81,7 @@ class NavItemRenderer
     public function renderMenuItemSubtitle($title, $item, $args, $depth)
     {
         $subtitle = get_post_meta($item->ID, '_jankx_menu_item_subtitle', true);
-        $subtitle_position = get_post_meta($item->ID, '_jankx_menu_item_subtitle_position', true);
+        $subtitle_position = get_post_meta($item->ID, 'sty_position', true);
         if (!$subtitle) {
             return $title;
         }
@@ -92,12 +92,16 @@ class NavItemRenderer
         if ($subtitle_position === 'top') {
             return sprintf(
                 '<span class="jankx-subtitle position-%s menu-item-subtitle">%s</span>%s',
-                $subtitle, $subtitle_position, $title
+                $subtitle,
+                $subtitle_position,
+                $title
             );
         }
         return sprintf(
             '%s<span class="jankx-subtitle position-%s menu-item-subtitle">%s</span>',
-            $title, $subtitle_position, $subtitle
+            $title,
+            $subtitle_position,
+            $subtitle
         );
     }
 

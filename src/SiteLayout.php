@@ -81,6 +81,7 @@ class SiteLayout
         add_action('get_sidebar', array(SiteLayout::class, 'getSidebarName'));
         add_action('after_setup_theme', array($this->menu, 'register'));
 
+        add_action('wp_head', array($this, 'metaViewport'), 5);
         add_filter('body_class', array($this, 'bodyClasses'));
     }
 
@@ -200,5 +201,15 @@ class SiteLayout
             ));
             register_sidebar($secondaryArgs);
         }
+    }
+
+    public function metaViewport()
+    {
+        if (!apply_filters('jankx_site_support_responsive_layout', true)) {
+            return;
+        }
+        ?>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <?php
     }
 }

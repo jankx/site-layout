@@ -54,6 +54,8 @@ class LayoutLoader
             'class' => 'jankx-wrapper main-content-sidebar'
         ));
         printf('<div %s>', jankx_generate_html_attributes($attributes));
+
+        do_action('jankx_template_main_content_sidebar_start');
     }
 
     public function openMainContentSidebarWrapInner()
@@ -83,6 +85,8 @@ class LayoutLoader
 
     public function closeMainContentSidebarWrapInner()
     {
+        do_action('jankx_template_main_content_sidebar_end');
+
         jankx_template('layout/content-sidebar-close');
     }
 

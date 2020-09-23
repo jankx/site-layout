@@ -34,8 +34,8 @@ class LayoutLoader
         add_action('jankx_template_after_header', array($this, 'openMainContentSidebarWrap'), 15);
         add_action('jankx_template_before_footer', array($this, 'closeMainContentSidebarWrap'), 5);
 
-        add_action('jankx_template_after_header', 'jankx_open_container', 20);
-        add_action('jankx_template_before_footer', 'jankx_close_container', 3);
+        add_action('jankx_template_after_header', array($this, 'openJankxSidebarContentContainer'), 20);
+        add_action('jankx_template_before_footer', array($this, 'closeJankxSidebarContentContainer'), 4);
 
         add_action('jankx_template_after_header', array($this, 'openMainContentSidebarWrapInner'), 30);
         add_action('jankx_template_before_footer', array($this, 'closeMainContentSidebarWrapInner'), 3);
@@ -56,6 +56,17 @@ class LayoutLoader
         printf('<div %s>', jankx_generate_html_attributes($attributes));
 
         do_action('jankx_template_main_content_sidebar_start');
+    }
+
+    public function openJankxSidebarContentContainer()
+    {
+        jankx_open_container(array('main-content-sidebar-wrapper'));
+    }
+
+    public function closeJankxSidebarContentContainer()
+    {
+        jankx_close_container();
+        echo '<!-- Close .main-content-sidebar-wrapper -->';
     }
 
     public function openMainContentSidebarWrapInner()

@@ -31,23 +31,34 @@ class LayoutLoader
 
     protected function buildBaseLayout()
     {
-        add_action('jankx_template_after_header', array($this, 'openMainContentSidebarWrap'), 20);
+        add_action('jankx_template_after_header', array($this, 'openMainContentSidebarWrap'), 15);
+        add_action('jankx_template_before_footer', array($this, 'closeMainContentSidebarWrap'), 5);
+
+        add_action('jankx_template_after_header', 'jankx_open_container', 20);
+        add_action('jankx_template_before_footer', 'jankx_close_container', 3);
+
+        add_action('jankx_template_after_header', array($this, 'openMainContentSidebarWrapInner'), 30);
+        add_action('jankx_template_before_footer', array($this, 'closeMainContentSidebarWrapInner'), 3);
+
         add_action('jankx_template_after_header', array($this, 'beforeMainContentAndSidebar'), 25);
         add_action('jankx_template_after_header', array($this, 'beforeMainContent'), 30);
 
         add_action('jankx_template_before_footer', array($this, 'afterMainContent'), 1);
         add_action('jankx_template_before_footer', array($this, 'afterMainContentAndSidebar'), 2);
-        add_action('jankx_template_before_footer', array($this, 'closeMainContentSidebarWrap'), 3);
     }
 
     // Start base layout for Jankx Framework
     public function openMainContentSidebarWrap()
     {
-        jankx_open_container(array(
-            'jankx-wrapper',
-            'main-content-sidebar'
+        $attributes = apply_filters('jankx_tag_main_content_sidebar_attributes', array(
+            'class' => 'jankx-wrapper main-content-sidebar'
         ));
-        jankx_template('layout/content-sidebar-open.php');
+        printf('<div %s>', jankx_generate_html_attributes($attributes));
+    }
+
+    public function openMainContentSidebarWrapInner()
+    {
+        jankx_template('layout/content-sidebar-open');
     }
 
     public function beforeMainContentAndSidebar()
@@ -70,16 +81,20 @@ class LayoutLoader
         do_action('jankx_template_after_main_content_sidebar');
     }
 
+    public function closeMainContentSidebarWrapInner()
+    {
+        jankx_template('layout/content-sidebar-close');
+    }
+
     public function closeMainContentSidebarWrap()
     {
-        jankx_template('layout/content-sidebar-close.php');
         echo '</div>';
     }
     // End base layout for Jankx Framework
 
     protected function buildMainContentWrap()
     {
-        add_action('jankx_template_before_main_content', array($this, 'openMainContent'), 5);
+        add_action('jankx_template_before_main_content', array($this, 'openMainContent'), 9);
         add_action('jankx_template_after_main_content', array($this, 'closeMainContent'), 25);
     }
 

@@ -6,6 +6,7 @@ use Jankx\SiteLayout\Admin\Metabox\PostLayout;
 use Jankx\Template\Page;
 use Jankx\Template\Template;
 use Jankx\SiteLayout\Menu\JankxItems;
+use Jankx\SiteLayout\Menu\Slideout;
 
 use function get_current_screen;
 
@@ -83,6 +84,8 @@ class SiteLayout
 
         add_action('wp_head', array($this, 'metaViewport'), 5);
         add_filter('body_class', array($this, 'bodyClasses'));
+
+        add_action('template_redirect', array($this, 'createSlideoutMenu'));
     }
 
     public function registeMenus()
@@ -211,5 +214,11 @@ class SiteLayout
         ?>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <?php
+    }
+
+    public function createSlideoutMenu()
+    {
+        $slideout = new Slideout();
+        $slideout->load();
     }
 }

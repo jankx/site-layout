@@ -18,8 +18,8 @@ class JankxItems
     {
         add_filter('manage_nav-menus_columns', array($this, 'add_item_subtitle'), 15);
 
-        add_action('wp_nav_menu_item_custom_fields', array($this, 'add_custom_subtitle_field'), 10, 5);
-        add_action('wp_nav_menu_item_custom_fields', array($this, 'add_custom_subtitle_position'), 10, 5);
+        add_action('wp_nav_menu_item_custom_fields', array($this, 'add_custom_subtitle_field'), 10, 4);
+        add_action('wp_nav_menu_item_custom_fields', array($this, 'add_custom_subtitle_position'), 10, 4);
 
         add_action('save_post', array($this, 'save_subtile_metadata'), 10, 2);
         add_action('save_post', array($this, 'save_subtile_position'), 10, 2);
@@ -169,7 +169,7 @@ class JankxItems
         return $columns;
     }
 
-    public function add_custom_subtitle_field($item_id, $item, $depth, $args, $id)
+    public function add_custom_subtitle_field($item_id, $item, $depth, $args)
     {
         $subtitle = get_post_meta($item_id, '_jankx_menu_item_subtitle', true);
         ?>
@@ -191,7 +191,7 @@ class JankxItems
         <?php
     }
 
-    public function add_custom_subtitle_position($item_id, $item, $depth, $args, $id)
+    public function add_custom_subtitle_position($item_id, $item, $depth, $args)
     {
         $subtitle_position = get_post_meta($item_id, '_jankx_menu_item_subtitle_position', true);
         $options = array(

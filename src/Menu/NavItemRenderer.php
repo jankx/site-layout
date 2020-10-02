@@ -29,7 +29,7 @@ class NavItemRenderer
         return jankx_component('logo', array(
             'type' => has_custom_logo() > 0 ? 'image' : 'text',
             'text' => $item->post_title,
-            'image_url' => isset($logo[0]) && is_a($logo[0], Medoid_Image::class) ? (string)$logo[0] : '',
+            'image_url' => isset($logo[0]) ? (string) $logo[0] : '',
         ));
     }
 

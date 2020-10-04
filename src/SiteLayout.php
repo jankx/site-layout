@@ -75,7 +75,7 @@ class SiteLayout
 
     protected function initHooks()
     {
-        add_action('after_setup_theme', array($this, 'registeMenus'));
+        add_action('after_setup_theme', array($this, 'registerMenus'));
         add_action('widgets_init', array($this, 'registerSidebars'), 5);
         add_action('jankx_call_page_template', array($this, 'buildLayout'));
 
@@ -88,7 +88,7 @@ class SiteLayout
         add_action('template_redirect', array($this, 'createSlideoutMenu'));
     }
 
-    public function registeMenus()
+    public function registerMenus()
     {
         register_nav_menus(
             apply_filters(

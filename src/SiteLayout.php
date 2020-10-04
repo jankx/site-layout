@@ -25,6 +25,8 @@ class SiteLayout
     protected $currentLayout;
     protected $menu;
 
+    public $layoutLoader;
+
     public static function getInstance()
     {
         if (is_null(static::$instance)) {
@@ -106,13 +108,13 @@ class SiteLayout
         /**
          * Load template for site layout
          */
-        $layoutLoader = new LayoutLoader(
+        $this->layoutLoader = new LayoutLoader(
             $this->getLayout(),
             EngineManager::getEngine(
                 Template::getDefaultLoader()
             )
         );
-        $layoutLoader->load();
+        $this->layoutLoader->load();
     }
 
     public function bodyClasses($classes)

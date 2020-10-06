@@ -62,12 +62,6 @@ class SiteLayout
         $footerBuilder = new FooterBuilder();
         $footerBuilder->build();
 
-        /**
-         * Integration with other plugins
-         */
-        $integrationPlugins = new IntegrationPlugins();
-        $integrationPlugins->integrate();
-
         $this->menu = new JankxItems();
 
         if (is_admin()) {

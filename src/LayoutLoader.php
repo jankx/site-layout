@@ -34,8 +34,10 @@ class LayoutLoader
         add_action('jankx_template_after_header', array($this, 'openMainContentSidebarWrap'), 15);
         add_action('jankx_template_before_footer', array($this, 'closeMainContentSidebarWrap'), 5);
 
-        add_action('jankx_template_after_header', array($this, 'openJankxSidebarContentContainer'), 20);
-        add_action('jankx_template_before_footer', array($this, 'closeJankxSidebarContentContainer'), 4);
+        if (!apply_filters('jankx_template_disable_main_content_sidebar_container', false)) {
+            add_action('jankx_template_after_header', array($this, 'openJankxSidebarContentContainer'), 20);
+            add_action('jankx_template_before_footer', array($this, 'closeJankxSidebarContentContainer'), 4);
+        }
 
         add_action('jankx_template_after_header', array($this, 'openMainContentSidebarWrapInner'), 30);
         add_action('jankx_template_before_footer', array($this, 'closeMainContentSidebarWrapInner'), 3);

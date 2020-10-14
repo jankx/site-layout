@@ -81,7 +81,7 @@ class SiteLayout
         add_action('wp_head', array($this, 'metaViewport'), 5);
         add_filter('body_class', array($this, 'bodyClasses'));
 
-        add_action('template_redirect', array($this, 'createSlideoutMenu'));
+        add_action('template_redirect', array($this, 'createSlideoutMenu'), 5);
     }
 
     public function registerMenus()

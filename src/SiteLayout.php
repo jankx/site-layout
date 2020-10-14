@@ -179,7 +179,7 @@ class SiteLayout
     {
         return apply_filters(
             'jankx_template_default_site_layout',
-            static::LAYOUT_FULL_WIDTH
+            is_singular('post') ? static::LAYOUT_CONTENT_SIDEBAR : static::LAYOUT_FULL_WIDTH
         );
     }
 

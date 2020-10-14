@@ -20,31 +20,38 @@ class Slideout
           });
 
           // Toggle button
-          document.querySelector('.toggle-button').addEventListener('click', function() {
-            slideout.toggle();
-          });</script>");
+          var toogleButton = document.querySelector('.toggle-button');
+          if (toogleButton) {
+            toogleButton.addEventListener('click', function() {
+              slideout.toggle();
+            });
+          }
+          </script>");
     }
 
-    public function openMainPanel() {
+    public function openMainPanel()
+    {
         ?>
         <div id="main-panel" class="slideout-panel">
-            <button class="toggle-button">☰</button>
         <?php
     }
 
-    public function closeMainPanel() {
+    public function closeMainPanel()
+    {
         ?>
         </div> <!-- end #main-panel block -->
         <?php
     }
 
-    public function openSlideoutMenu() {
+    public function openSlideoutMenu()
+    {
         ?>
         <nav id="mobile-menu" class="slideout-menu">
         <?php
     }
 
-    public function closeSlideoutMenu() {
+    public function closeSlideoutMenu()
+    {
         ?>
         </nav>
         <?php

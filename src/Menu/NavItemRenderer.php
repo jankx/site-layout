@@ -122,7 +122,7 @@ class NavItemRenderer
         return sprintf(
             '<li id="menu-item-customm-jankx-logo" class="menu-item menu-item-type-jankx-logo menu-item-logo">%s</li>%s',
             $this->getJankxLogo($item),
-            $items,
+            $items
         );
     }
 }

@@ -12,11 +12,14 @@ class Slideout
         add_action('wp_footer', array($this, 'closeMainPanel'), 1);
 
 
+        $slideDirection = apply_filters('slideout_menu_direction', 'left');
+
         execute_script("<script>var slideout = new Slideout({
             'panel': document.getElementById('main-panel'),
             'menu': document.getElementById('mobile-menu'),
             'padding': 256,
-            'tolerance': 70
+            'tolerance': 70,
+            'side': '{$slideDirection}'
           });
 
           // Toggle button

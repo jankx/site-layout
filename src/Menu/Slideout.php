@@ -15,6 +15,10 @@ class Slideout implements MobileMenuLayout
         add_action('jankx_template_after_header', array($this, 'openMainPanel'), 9);
         add_action('wp_footer', array($this, 'closeMainPanel'), 1);
 
+        add_filter('jankx_assetjs_dependences', function($deps){
+            $deps[] = 'slideout';
+            return $deps;
+        });
 
         $slideDirection = apply_filters('slideout_menu_direction', 'left');
 

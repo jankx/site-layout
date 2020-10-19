@@ -1,8 +1,12 @@
 <?php
 namespace Jankx\SiteLayout\Menu;
 
-class Slideout
+use Jankx\SiteLayout\Constracts\MobileMenuLayout;
+
+class Slideout implements MobileMenuLayout
 {
+    const NAME = 'slideout';
+
     public function load()
     {
         add_action('jankx_template_before_header', array($this, 'openSlideoutMenu'), 15);

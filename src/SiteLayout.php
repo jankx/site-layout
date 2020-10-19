@@ -5,8 +5,10 @@ use Jankx\Template\Engine\EngineManager;
 use Jankx\SiteLayout\Admin\Metabox\PostLayout;
 use Jankx\Template\Page;
 use Jankx\Template\Template;
+use Jankx\SiteLayout\Constracts\MobileMenuLayout;
 use Jankx\SiteLayout\Menu\JankxItems;
 use Jankx\SiteLayout\Menu\Slideout;
+use Jankx\SiteLayout\Menu\MMenu;
 
 use function get_current_screen;
 
@@ -21,6 +23,7 @@ class SiteLayout
 
     protected static $instance;
     protected static $sidebarName;
+    protected static $mobileMenus;
 
     protected $currentLayout;
     protected $menu;
@@ -81,7 +84,7 @@ class SiteLayout
         add_action('wp_head', array($this, 'metaViewport'), 5);
         add_filter('body_class', array($this, 'bodyClasses'));
 
-        add_action('template_redirect', array($this, 'createSlideoutMenu'), 5);
+        add_action('template_redirect', array($this, 'createMobileMenu'), 5);
     }
 
     public function registerMenus()
@@ -218,9 +221,33 @@ class SiteLayout
         <?php
     }
 
-    public function createSlideoutMenu()
+    public static function getMobileMenus() {
+        if (is_null(static::$mobileMenus)) {
+            static::$mobileMenus = apply_filters(
+                'jankx_site_layout_mobile_menus',
+                array(
+                    Slideout::NAME => Slideout::class,
+                    MMenu::NAME => MMenu::class
+                )
+            );
+        }
+        return static::$mobileMenus;
+    }
+
+    public function createMobileMenu()
     {
-        $slideout = new Slideout();
-        $slideout->load();
+        // Check theme enable mobile menu
+        if (!apply_filters('jankx_site_layout_enable_mobile_menu', true)) {
+            return;
+        }
+        $menus = static::getMobileMenus();
+        $useMenu = apply_filters('jankx_site_layout_mobile_menu', Slideout::NAME);
+
+        if (isset($menus[$useMenu])) {
+            $mobileMenu = new $menus[$useMenu]();
+            if (is_a($mobileMenu, MobileMenuLayout::class)) {
+                $mobileMenu->load();
+            }
+        }
     }
 }

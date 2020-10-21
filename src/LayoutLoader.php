@@ -105,7 +105,7 @@ class LayoutLoader
 
     public function closeMainContentSidebarWrap()
     {
-        echo '</div>';
+        echo '</div><!-- Close .main-content-sidebar-wrap -->';
     }
     // End base layout for Jankx Framework
 

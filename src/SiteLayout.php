@@ -143,7 +143,7 @@ class SiteLayout
         return $layouts;
     }
 
-    public function getLayout()
+    public function getLayout($skipDefault = false)
     {
         if (!is_null($this->currentLayout)) {
             return $this->currentLayout;
@@ -152,6 +152,9 @@ class SiteLayout
         $this->currentLayout = $this->getCurrentLayout();
 
         if (empty($this->currentLayout)) {
+            if ($skipDefault) {
+                return $this->currentLayout;
+            }
             $this->currentLayout = $this->getDefaultLayout();
         }
 

@@ -33,7 +33,7 @@ class PostLayout
     public function render()
     {
         $siteLayout    = SiteLayout::getInstance();
-        $currentLayout = $siteLayout->getLayout();
+        $currentLayout = $siteLayout->getLayout(true);
         $layouts       = $siteLayout->getSupportLayouts();
         $metaKey       = self::POST_LAYOUT_META_KEY;
         $templateFile  = sprintf('%s/templates/metabox.php', JANKX_SITE_LAYOUT_DIR);

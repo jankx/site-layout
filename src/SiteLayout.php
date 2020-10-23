@@ -224,7 +224,8 @@ class SiteLayout
         <?php
     }
 
-    public static function getMobileMenus() {
+    public static function getMobileMenus()
+    {
         if (is_null(static::$mobileMenus)) {
             static::$mobileMenus = apply_filters(
                 'jankx_site_layout_mobile_menus',

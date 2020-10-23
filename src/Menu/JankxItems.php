@@ -249,7 +249,8 @@ class JankxItems
         }
     }
 
-    public function clean_menu_css_classes($classes) {
+    public function clean_menu_css_classes($classes)
+    {
         array_pop($classes);
 
         if (false !== ($index = array_search('menu-item-object-', $classes))) {

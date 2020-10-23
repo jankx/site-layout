@@ -1,6 +1,7 @@
 <?php
 namespace Jankx\SiteLayout\Constracts;
 
-interface MobileMenuLayout {
+interface MobileMenuLayout
+{
     public function load();
 }

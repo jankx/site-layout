@@ -8,7 +8,6 @@ use Jankx\Template\Template;
 use Jankx\SiteLayout\Constracts\MobileMenuLayout;
 use Jankx\SiteLayout\Menu\JankxItems;
 use Jankx\SiteLayout\Menu\Slideout;
-use Jankx\SiteLayout\Menu\MMenu;
 
 use function get_current_screen;
 
@@ -230,8 +229,7 @@ class SiteLayout
             static::$mobileMenus = apply_filters(
                 'jankx_site_layout_mobile_menus',
                 array(
-                    Slideout::NAME => Slideout::class,
-                    MMenu::NAME => MMenu::class
+                    Slideout::NAME => Slideout::class
                 )
             );
         }

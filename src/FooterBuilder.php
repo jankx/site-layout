@@ -8,12 +8,19 @@ class FooterBuilder
     public function build()
     {
         add_action('widgets_init', array($this, 'registerSidebars'), 30);
+        add_action('template_redirect', array($this, 'renderFooterWidgetsContent'), 30);
+        add_action('wp_enqueue_scripts', array($this, 'generateFooterWidgetStyles'));
+    }
 
+    public function renderFooterWidgetsContent()
+    {
+        $numOfFooterWidgets = apply_filters('jankx_template_num_of_frontend_footer_widgets', static::$numOfFooterWidgets);
+        if ($numOfFooterWidgets <= 0) {
+            return;
+        }
         add_action('jankx_template_before_footer_widgets', array($this, 'openFooterWidgetAreas'));
         add_action('jankx_template_footer_widgets', array($this, 'render'));
         add_action('jankx_template_after_footer_widgets', array($this, 'closeFooterWidgetAreas'));
-
-        add_action('wp_enqueue_scripts', array($this, 'generateFooterWidgetStyles'));
     }
 
     public static function getNumOfFooterWidgets()

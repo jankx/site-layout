@@ -8,6 +8,7 @@ use Jankx\Template\Template;
 use Jankx\SiteLayout\Constracts\MobileMenuLayout;
 use Jankx\SiteLayout\Menu\JankxItems;
 use Jankx\SiteLayout\Menu\Slideout;
+use Jankx\SiteLayout\Customizer\Header as HeaderCustomizer;
 
 use function get_current_screen;
 
@@ -65,6 +66,9 @@ class SiteLayout
         $footerBuilder->build();
 
         $this->menu = new JankxItems();
+
+        $headerCustomizer = new HeaderCustomizer();
+        $headerCustomizer->customize();
 
         if (is_admin()) {
             new Admin();

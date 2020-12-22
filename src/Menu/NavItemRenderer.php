@@ -29,6 +29,7 @@ class NavItemRenderer
         return jankx_component('logo', array(
             'type' => has_custom_logo() > 0 ? 'image' : 'text',
             'text' => $item->post_title,
+            'logo_image_id' => $custom_logo_id,
             'image_url' => isset($logo[0]) ? (string) $logo[0] : '',
         ));
     }

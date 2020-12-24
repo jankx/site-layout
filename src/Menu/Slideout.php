@@ -27,6 +27,7 @@ class Slideout implements MobileMenuLayout
             'menu': document.getElementById('mobile-menu'),
             'padding': 256,
             'tolerance': 70,
+            'touch': false,
             'side': '{$slideDirection}'
           });
 

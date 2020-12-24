@@ -23,14 +23,8 @@ class NavItemRenderer
         // Create a flag logo is added
         $this->logo_is_added = true;
 
-        $custom_logo_id = get_theme_mod('custom_logo');
-        $logo = wp_get_attachment_image_src($custom_logo_id, 'full');
-
         return jankx_component('logo', array(
-            'type' => has_custom_logo() > 0 ? 'image' : 'text',
-            'text' => $item->post_title,
-            'logo_image_id' => $custom_logo_id,
-            'image_url' => isset($logo[0]) ? (string) $logo[0] : '',
+            'text' => $item->post_title
         ));
     }
 

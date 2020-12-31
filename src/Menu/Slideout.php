@@ -21,13 +21,14 @@ class Slideout implements MobileMenuLayout
         });
 
         $slideDirection = apply_filters('slideout_menu_direction', 'left');
+        $enableTouch    = (string) apply_filters('slideout_menu_touch', true);
 
         execute_script("<script>var slideout = new Slideout({
             'panel': document.getElementById('main-panel'),
             'menu': document.getElementById('mobile-menu'),
             'padding': 256,
             'tolerance': 70,
-            'touch': false,
+            'touch': {$enableTouch},
             'side': '{$slideDirection}'
           });
 

@@ -3,7 +3,7 @@
   "description": "The best way to create multi-layouts",
   "type": "library",
   "require": {
-    "jankx/template": "dev-master",
+    "jankx/template": "^1.0",
     "jankx/component": "dev-master"
   },
   "license": "MIT",

@@ -54,7 +54,8 @@ class JankxItems
 
         static::$jankxNavItems = array(
             'jankx-logo' => __('Site Logo', 'jankx'),
-            'jankx-search-form' => __('Search Form', 'jankx')
+            'jankx-search-form' => __('Search Form', 'jankx'),
+            'jankx-divider' => __('Divider', 'jankx'),
         );
         static::$jankxNavItems = apply_filters(
             'jankx_site_layout_menu_items',

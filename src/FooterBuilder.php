@@ -84,7 +84,7 @@ class FooterBuilder
 
     public function openFooterWidgetAreas()
     {
-        jankx_template('layout/footer/open-widget-areas', array(
+        jankx_template('partials/footer/open-widget-areas', array(
             'footer_widget_classes' => implode(' ', (array)apply_filters(
                 'jankx_template_footer_widget_wrapper_class',
                 array('jankx-footer-widgets-area')
@@ -93,7 +93,7 @@ class FooterBuilder
 
     public function closeFooterWidgetAreas()
     {
-        jankx_template('layout/footer/close-widget-areas');
+        jankx_template('partials/footer/close-widget-areas');
     }
 
     public function render()
@@ -108,8 +108,8 @@ class FooterBuilder
         do_action('jankx_template_before_footer_widgets');
         while ($currentSidebarIndex <= $numOfFooterWidgets) {
             jankx_template(array(
-                "layout/footer/widget-areas/area-{$currentSidebarIndex}",
-                'layout/footer/widget-areas/general'
+                "partials/footer/widget-areas/area-{$currentSidebarIndex}",
+                'partials/footer/widget-areas/general'
             ), array(
                 'index' => $currentSidebarIndex,
             ));
@@ -127,6 +127,6 @@ class FooterBuilder
         }
 
         // Load footer styles and don't echo by set 4 argument value is `false`
-        jankx_template('layout/footer/styles', compact('numOfFooterWidgets'), null, false);
+        jankx_template('partials/footer/styles', compact('numOfFooterWidgets'), null, false);
     }
 }

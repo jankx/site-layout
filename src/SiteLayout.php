@@ -1,7 +1,7 @@
 <?php
 namespace Jankx\SiteLayout;
 
-use Jankx\Template\Engine\EngineManager;
+use Jankx\TemplateEngine\EngineManager;
 use Jankx\SiteLayout\Admin\Metabox\PostLayout;
 use Jankx\Template\Page;
 use Jankx\Template\Template;

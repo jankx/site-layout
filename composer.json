@@ -3,6 +3,7 @@
   "description": "The best way to create multi-layouts",
   "type": "library",
   "require": {
+    "jankx/assets": "*",
     "jankx/template": "*",
     "jankx/component": "*"
   },

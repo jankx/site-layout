@@ -1,6 +1,9 @@
 <?php
 namespace Jankx\SiteLayout;
 
+use Jankx\Asset\Cache;
+use Jankx\Asset\CssItem;
+
 class FooterBuilder
 {
     protected static $numOfFooterWidgets;
@@ -120,6 +123,10 @@ class FooterBuilder
 
     public function generateFooterWidgetStyles()
     {
+        if (Cache::globalCssIsExists()) {
+            return;
+        }
+
         $numOfFooterWidgets = static::getNumOfFooterWidgets();
         // Disable footer widgets when the num of it less than and equal 0
         if ($numOfFooterWidgets <= 0) {
@@ -127,6 +134,10 @@ class FooterBuilder
         }
 
         // Load footer styles and don't echo by set 4 argument value is `false`
-        jankx_template('partials/footer/styles', compact('numOfFooterWidgets'), null, false);
+        $footer_styles = CssItem::loadCustomize(
+            'footer_styles.php',
+            compact('numOfFooterWidgets')
+        );
+        Cache::addGlobalCss($footer_styles);
     }
 }

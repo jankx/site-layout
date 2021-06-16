@@ -1,6 +1,7 @@
 <?php
 namespace Jankx\SiteLayout\Menu;
 
+use Jankx;
 use Jankx\SiteLayout\Menu\NavItemRenderer;
 
 class JankxItems
@@ -39,7 +40,10 @@ class JankxItems
     {
         add_meta_box(
             'jankx_nav_links',
-            __('Jankx Items', 'jankx'),
+            sprintf(
+                __('%s Items', 'jankx'),
+                class_exists(Jankx::class) ? Jankx::templateName() : 'Jankx'
+            ),
             array( $this, 'nav_menu_links' ),
             'nav-menus',
             'side'
@@ -157,7 +161,11 @@ class JankxItems
         $items = static::get_nav_items();
 
         if (isset($items[$menu_item->type])) {
-            $menu_item->type_label = sprintf('Jankx %s', $items[$menu_item->type]);
+            $menu_item->type_label = sprintf(
+                '%s %s',
+                class_exists(Jankx::class) ? Jankx::templateName() : 'Jankx',
+                $items[$menu_item->type]
+            );
         }
 
         return $menu_item;

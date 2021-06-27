@@ -2,7 +2,7 @@
 namespace Jankx\SiteLayout;
 
 use Jankx\Asset\Cache;
-use Jankx\Asset\CssItem;
+use Jankx\Asset\CustomizableAsset;
 
 class FooterBuilder
 {
@@ -134,7 +134,7 @@ class FooterBuilder
         }
 
         // Load footer styles and don't echo by set 4 argument value is `false`
-        $footer_styles = CssItem::loadCustomize(
+        $footer_styles = CustomizableAsset::loadCustomize(
             'footer_styles.php',
             compact('numOfFooterWidgets')
         );

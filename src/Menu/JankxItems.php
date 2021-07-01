@@ -231,14 +231,18 @@ class JankxItems
         if (empty($_POST['menu-item-subtitle'])) {
             return;
         }
-        $subtitles = array_filter($_POST['menu-item-subtitle']);
+        $subtitles = array_get($_POST, 'menu-item-subtitle');
 
         foreach ($subtitles as $post_ID => $subtitle) {
             $menuItem = get_post($post_ID);
             if (!$menuItem || $menuItem->post_type !== 'nav_menu_item') {
                 continue;
             }
-            update_post_meta($post_ID, '_jankx_menu_item_subtitle', $subtitle);
+            if (empty($subtitle)) {
+                delete_post_meta($post_ID, '_jankx_menu_item_subtitle');
+            } else {
+                update_post_meta($post_ID, '_jankx_menu_item_subtitle', $subtitle);
+            }
         }
     }
 

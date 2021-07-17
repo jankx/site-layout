@@ -9,6 +9,7 @@ class JankxItems
     protected static $jankxNavItems;
 
     protected $renderer;
+    protected $override_columns_hidden;
 
     public function __construct()
     {
@@ -17,33 +18,38 @@ class JankxItems
 
     public function register()
     {
-        add_filter('manage_nav-menus_columns', array($this, 'add_item_subtitle'), 15);
+        add_action('save_post', array($this, 'save_jankx_menu_item_meta'), 10, 2);
 
-        add_action('wp_nav_menu_item_custom_fields', array($this, 'add_custom_subtitle_field'), 10, 4);
-        add_action('wp_nav_menu_item_custom_fields', array($this, 'add_custom_subtitle_position'), 10, 4);
+        if (wp_is_request('admin')) {
+            add_action('admin_head-nav-menus.php', array( $this, 'add_menu_meta_boxes' ));
+            add_filter('wp_setup_nav_menu_item', array($this, 'setup_jankx_items'));
 
-        add_action('save_post', array($this, 'save_subtile_metadata'), 10, 2);
-        add_action('save_post', array($this, 'save_subtile_position'), 10, 2);
+            add_filter('manage_nav-menus_columns', array($this, 'setup_jankx_extra_features'), 15);
 
-        add_action('admin_head-nav-menus.php', array( $this, 'add_menu_meta_boxes' ));
-        add_filter('wp_setup_nav_menu_item', array($this, 'setup_jankx_items'));
+            add_action('wp_nav_menu_item_custom_fields', array($this, 'add_custom_subtitle_field'), 10, 4);
+            add_action('wp_nav_menu_item_custom_fields', array($this, 'add_custom_subtitle_position'), 10, 4);
 
-        add_filter('wp_nav_menu_objects', array($this->renderer, 'resetWalkerSupportHookStartEl'));
-        add_filter('walker_nav_menu_start_el', array($this->renderer, 'renderMenuItem'), 10, 4);
-        add_filter('nav_menu_css_class', array($this, 'clean_menu_css_classes'));
-        add_filter('nav_menu_item_title', array($this->renderer, 'renderMenuItemSubtitle'), 10, 4);
+            add_action('wp_nav_menu_item_custom_fields', array($this, 'add_custom_menu_item_display'), 10, 5);
 
-        add_filter('wp_nav_menu_items', array($this->renderer, 'unsupportSiteLogoInPrimaryMenu'), 10, 2);
+            add_filter("update_user_metadata", array($this, 'hide_jankx_menu_columns'), 10, 4);
+        }
+
+        if (wp_is_request('frontend')) {
+            add_filter('wp_nav_menu_objects', array($this->renderer, 'resetWalkerSupportHookStartEl'));
+            add_filter('walker_nav_menu_start_el', array($this->renderer, 'renderMenuItem'), 10, 4);
+
+            add_filter('nav_menu_css_class', array($this, 'clean_menu_css_classes'));
+            add_filter('nav_menu_item_title', array($this->renderer, 'renderMenuItemSubtitle'), 10, 4);
+
+            add_filter('wp_nav_menu_items', array($this->renderer, 'unsupportSiteLogoInPrimaryMenu'), 10, 2);
+        }
     }
 
     public function add_menu_meta_boxes()
     {
         add_meta_box(
             'jankx_nav_links',
-            sprintf(
-                __('%s Items', 'jankx'),
-                class_exists(Jankx::class) ? Jankx::templateName() : 'Jankx'
-            ),
+            class_exists(Jankx::class) ? Jankx::templateName() : __('Jankx Framework', 'jankx'),
             array( $this, 'nav_menu_links' ),
             'nav-menus',
             'side'
@@ -58,8 +64,7 @@ class JankxItems
 
         static::$jankxNavItems = array(
             'jankx-logo' => __('Site Logo', 'jankx'),
-            'jankx-search-form' => __('Search Form', 'jankx'),
-            'jankx-divider' => __('Divider', 'jankx'),
+            'jankx-search-form' => __('Search Form', 'jankx')
         );
         static::$jankxNavItems = apply_filters(
             'jankx_site_layout_menu_items',
@@ -161,20 +166,17 @@ class JankxItems
         $items = static::get_nav_items();
 
         if (isset($items[$menu_item->type])) {
-            $menu_item->type_label = sprintf(
-                '%s %s',
-                class_exists(Jankx::class) ? Jankx::templateName() : 'Jankx',
-                $items[$menu_item->type]
-            );
+            $menu_item->type_label = sprintf('Jankx %s', $items[$menu_item->type]);
         }
 
         return $menu_item;
     }
 
-    public function add_item_subtitle($columns)
+    public function setup_jankx_extra_features($columns)
     {
         $columns = array_merge($columns, array(
             'subtitle' => __('Jankx Subtitle', 'jankx'),
+            'menu_item_display' => __('Display', 'jankx'),
         ));
         return $columns;
     }
@@ -212,10 +214,10 @@ class JankxItems
             'before' => __('After'),
         );
         ?>
-        <p class="field-subtitle description-wide">
+        <p class="description field-subtitle description-wide">
             <label for="edit-menu-item-title-23019">
                 <?php _e('Subtitle position', 'jankx'); ?>
-                <select name="menu-item-subtitle-position[<?php echo $item->ID; ?>] id=">
+                <select class="widefat" name="menu-item-subtitle-position[<?php echo $item->ID; ?>]" id="">
                     <?php foreach ($options as $key => $value) : ?>
                     <option value="<?php echo $key ?>"<?php selected($key, $subtitle_position); ?>><?php echo esc_html($value); ?></option>
                     <?php endforeach; ?>
@@ -226,39 +228,103 @@ class JankxItems
         <?php
     }
 
-    public function save_subtile_metadata()
+    public function add_custom_menu_item_display($item_id, $item, $depth, $args)
     {
-        if (empty($_POST['menu-item-subtitle'])) {
-            return;
-        }
-        $subtitles = array_get($_POST, 'menu-item-subtitle');
-
-        foreach ($subtitles as $post_ID => $subtitle) {
-            $menuItem = get_post($post_ID);
-            if (!$menuItem || $menuItem->post_type !== 'nav_menu_item') {
-                continue;
-            }
-            if (empty($subtitle)) {
-                delete_post_meta($post_ID, '_jankx_menu_item_subtitle');
-            } else {
-                update_post_meta($post_ID, '_jankx_menu_item_subtitle', $subtitle);
-            }
-        }
+        $subtitle_position = get_post_meta($item_id, '_jankx_menu_item_display', true);
+        $widths = array(
+            '' => __('Normal'),
+            'stretch' => __('Stretch', 'jankx')
+        );
+        $positions = array(
+            '' => __('Left (Default)', 'jankx'),
+            'center' => __('Center', 'jankx'),
+            'right' => __('Right'),
+        );
+        ?>
+        <p class="description field-menu_item_display description-wide">
+            <label for="edit-menu-item-title-23019">
+                <?php _e('Width', 'jankx'); ?>
+                <select class="widefat" name="menu-item-display-width[<?php echo $item->ID; ?>]" id="">
+                    <?php foreach ($widths as $key => $value) : ?>
+                    <option value="<?php echo $key ?>"<?php selected($key, $subtitle_position); ?>><?php echo esc_html($value); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </label>
+        </p>
+        <p class="description field-menu_item_display description-wide">
+            <label for="edit-menu-item-title-23019">
+                <?php _e('Position', 'jankx'); ?>
+                <select class="widefat" name="menu-item-display-position[<?php echo $item->ID; ?>]" id="">
+                    <?php foreach ($positions as $key => $value) : ?>
+                    <option value="<?php echo $key ?>"<?php selected($key, $subtitle_position); ?>><?php echo esc_html($value); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </label>
+        </p>
+        <?php
     }
 
-    public function save_subtile_position()
+    public function save_jankx_menu_item_meta()
     {
-        if (empty($_POST['menu-item-subtitle-position'])) {
-            return;
-        }
-        $subtitles = array_filter($_POST['menu-item-subtitle-position']);
-
-        foreach ($subtitles as $post_ID => $subtitle) {
-            $menuItem = get_post($post_ID);
-            if (!$menuItem || $menuItem->post_type !== 'nav_menu_item') {
-                continue;
+        if (!empty($_POST['menu-item-subtitle'])) {
+            $subtitles = $_POST['menu-item-subtitle'];
+            foreach ($subtitles as $post_ID => $subtitle) {
+                $menuItem = get_post($post_ID);
+                if (!$menuItem || $menuItem->post_type !== 'nav_menu_item') {
+                    continue;
+                }
+                if (trim($subtitle)) {
+                    update_post_meta($post_ID, '_jankx_menu_item_subtitle', $subtitle);
+                } else {
+                    delete_post_meta($post_ID, '_jankx_menu_item_subtitle', $subtitle);
+                }
             }
-            update_post_meta($post_ID, '_jankx_menu_item_subtitle_position', $subtitle);
+        }
+
+        if (!empty($_POST['menu-item-subtitle-position'])) {
+            $subtitles = $_POST['menu-item-subtitle-position'];
+
+            foreach ($subtitles as $post_ID => $subtitle) {
+                $menuItem = get_post($post_ID);
+                if (!$menuItem || $menuItem->post_type !== 'nav_menu_item') {
+                    continue;
+                }
+                if (trim($subtitle)) {
+                    update_post_meta($post_ID, '_jankx_menu_item_subtitle_position', $subtitle);
+                } else {
+                    delete_post_meta($post_ID, '_jankx_menu_item_subtitle_position', $subtitle);
+                }
+            }
+        }
+
+        if (!empty($_POST['menu-item-display-width'])) {
+            $widths = $_POST['menu-item-display-width'];
+            foreach ($widths as $post_ID => $width) {
+                $menuItem = get_post($post_ID);
+                if (!$menuItem || $menuItem->post_type !== 'nav_menu_item') {
+                    continue;
+                }
+                if (trim($width)) {
+                    update_post_meta($post_ID, '_jankx_menu_item_width', $width);
+                } else {
+                    delete_post_meta($post_ID, '_jankx_menu_item_width', $width);
+                }
+            }
+        }
+
+        if (!empty($_POST['position'])) {
+            $positions = $_POST['position'];
+            foreach ($positions as $post_ID => $position) {
+                $menuItem = get_post($post_ID);
+                if (!$menuItem || $menuItem->post_type !== 'nav_menu_item') {
+                    continue;
+                }
+                if (trim($position)) {
+                    update_post_meta($post_ID, '_jankx_menu_item_position', $position);
+                } else {
+                    delete_post_meta($post_ID, '_jankx_menu_item_position', $position);
+                }
+            }
         }
     }
 
@@ -271,5 +337,26 @@ class JankxItems
         }
 
         return $classes;
+    }
+
+    public function hide_jankx_menu_columns($check, $object_id, $meta_key, $meta_value)
+    {
+        if ($meta_key !== 'managenav-menuscolumnshidden' || false !== get_user_option('managenav-menuscolumnshidden') || $this->override_columns_hidden) {
+            return $check;
+        }
+
+        $this->override_columns_hidden = true;
+
+        array_push($meta_value, 'subtitle');
+        array_push($meta_value, 'menu_item_display');
+
+        update_user_option(
+            $object_id,
+            $meta_key,
+            $meta_value,
+            true
+        );
+
+        return $this->override_columns_hidden;
     }
 }

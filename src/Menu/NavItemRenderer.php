@@ -14,6 +14,28 @@ class NavItemRenderer
     {
         $this->hook_walker_nav_menu_start_el_is_called = false;
 
+        foreach ($sorted_menu_items as $index => $item) {
+            $metas = get_post_custom($item->ID);
+
+            if (isset($metas['_jankx_menu_item_width'])) {
+                $item->classes = array_merge(
+                    $item->classes,
+                    array_map(function ($width) {
+                        return 'jkxw-' . $width;
+                    }, $metas['_jankx_menu_item_width'])
+                );
+            }
+            if (isset($metas['_jankx_menu_item_position'])) {
+                $item->classes = array_merge(
+                    $item->classes,
+                    array_map(function ($position) {
+                        return 'jkxp-' . $position;
+                    }, $metas['_jankx_menu_item_position'])
+                );
+            }
+            $sorted_menu_items[$index] = $item;
+        }
+
         // Does not do anythin and return $sorted_menu_items
         return $sorted_menu_items;
     }
@@ -102,11 +124,15 @@ class NavItemRenderer
 
     public function checkLogoIsAdded()
     {
+        if (apply_filters('jankx_site_layout_disable_auto_add_logo_menu_item', null)) {
+            return true;
+        }
         return (bool)$this->logo_is_added;
     }
 
-    public function unsupportSiteLogoInPrimaryMenu($items, $args)
+    public function customDisplayMenuItem($items, $args)
     {
+        // Auto add logo menu item when primary menu doesn't has logo
         if ($this->checkLogoIsAdded() || $args->theme_location !== 'primary') {
             return $items;
         }

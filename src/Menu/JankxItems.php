@@ -18,8 +18,6 @@ class JankxItems
 
     public function register()
     {
-        add_action('save_post', array($this, 'save_jankx_menu_item_meta'), 10, 2);
-
         if (wp_is_request('admin')) {
             add_action('admin_head-nav-menus.php', array( $this, 'add_menu_meta_boxes' ));
             add_filter('wp_setup_nav_menu_item', array($this, 'setup_jankx_items'));
@@ -41,8 +39,10 @@ class JankxItems
             add_filter('nav_menu_css_class', array($this, 'clean_menu_css_classes'));
             add_filter('nav_menu_item_title', array($this->renderer, 'renderMenuItemSubtitle'), 10, 4);
 
-            add_filter('wp_nav_menu_items', array($this->renderer, 'unsupportSiteLogoInPrimaryMenu'), 10, 2);
+            add_filter('wp_nav_menu_items', array($this->renderer, 'customDisplayMenuItem'), 10, 2);
         }
+
+        add_action('save_post', array($this, 'save_jankx_menu_item_metas'), 10, 2);
     }
 
     public function add_menu_meta_boxes()
@@ -230,7 +230,8 @@ class JankxItems
 
     public function add_custom_menu_item_display($item_id, $item, $depth, $args)
     {
-        $subtitle_position = get_post_meta($item_id, '_jankx_menu_item_display', true);
+        $item_width = get_post_meta($item_id, '_jankx_menu_item_width', true);
+        $item_position = get_post_meta($item_id, '_jankx_menu_item_position', true);
         $widths = array(
             '' => __('Normal'),
             'stretch' => __('Stretch', 'jankx')
@@ -246,7 +247,7 @@ class JankxItems
                 <?php _e('Width', 'jankx'); ?>
                 <select class="widefat" name="menu-item-display-width[<?php echo $item->ID; ?>]" id="">
                     <?php foreach ($widths as $key => $value) : ?>
-                    <option value="<?php echo $key ?>"<?php selected($key, $subtitle_position); ?>><?php echo esc_html($value); ?></option>
+                    <option value="<?php echo $key ?>"<?php selected($key, $item_width); ?>><?php echo esc_html($value); ?></option>
                     <?php endforeach; ?>
                 </select>
             </label>
@@ -256,7 +257,7 @@ class JankxItems
                 <?php _e('Position', 'jankx'); ?>
                 <select class="widefat" name="menu-item-display-position[<?php echo $item->ID; ?>]" id="">
                     <?php foreach ($positions as $key => $value) : ?>
-                    <option value="<?php echo $key ?>"<?php selected($key, $subtitle_position); ?>><?php echo esc_html($value); ?></option>
+                    <option value="<?php echo $key ?>"<?php selected($key, $item_position); ?>><?php echo esc_html($value); ?></option>
                     <?php endforeach; ?>
                 </select>
             </label>
@@ -264,7 +265,7 @@ class JankxItems
         <?php
     }
 
-    public function save_jankx_menu_item_meta()
+    public function save_jankx_menu_item_metas()
     {
         if (!empty($_POST['menu-item-subtitle'])) {
             $subtitles = $_POST['menu-item-subtitle'];
@@ -312,8 +313,8 @@ class JankxItems
             }
         }
 
-        if (!empty($_POST['position'])) {
-            $positions = $_POST['position'];
+        if (!empty($_POST['menu-item-display-position'])) {
+            $positions = $_POST['menu-item-display-position'];
             foreach ($positions as $post_ID => $position) {
                 $menuItem = get_post($post_ID);
                 if (!$menuItem || $menuItem->post_type !== 'nav_menu_item') {

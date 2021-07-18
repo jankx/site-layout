@@ -17,13 +17,16 @@ class FooterBuilder
 
     public function renderFooterWidgetsContent()
     {
-        $numOfFooterWidgets = apply_filters('jankx_template_num_of_frontend_footer_widgets', static::$numOfFooterWidgets);
-        if ($numOfFooterWidgets <= 0) {
-            return;
+        $numOfFooterWidgets = apply_filters(
+            'jankx_template_num_of_frontend_footer_widgets',
+            static::$numOfFooterWidgets
+        );
+
+        if ($numOfFooterWidgets > 0) {
+            add_action('jankx_template_before_footer_widgets', array($this, 'openFooterWidgetAreas'));
+            add_action('jankx_template_footer_widgets', array($this, 'render'));
+            add_action('jankx_template_after_footer_widgets', array($this, 'closeFooterWidgetAreas'));
         }
-        add_action('jankx_template_before_footer_widgets', array($this, 'openFooterWidgetAreas'));
-        add_action('jankx_template_footer_widgets', array($this, 'render'));
-        add_action('jankx_template_after_footer_widgets', array($this, 'closeFooterWidgetAreas'));
     }
 
     public static function getNumOfFooterWidgets()
@@ -69,7 +72,10 @@ class FooterBuilder
                 $footerWidgetSidebarArgs,
                 array(
                     'id'          => sprintf('footer_%d', $currentSidebarIndex),
-                    'name'        => sprintf(__('Footer %d', 'jankx'), $currentSidebarIndex),
+                    'name'        => sprintf(
+                        __('Footer %s', 'jankx'),
+                        $numOfFooterWidgets > 1 ? $currentSidebarIndex : __('Widgets')
+                    ),
                     'description' => sprintf('The widgets are show in the footer area #%d', $currentSidebarIndex)
                 )
             );

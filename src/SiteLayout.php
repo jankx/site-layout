@@ -146,19 +146,16 @@ class SiteLayout
 
     public function getLayout($skipDefault = false)
     {
-        if (!is_null($this->currentLayout)) {
-            return $this->currentLayout;
-        }
+        if (is_null($this->currentLayout)) {
+            $this->currentLayout = $this->getCurrentLayout();
 
-        $this->currentLayout = $this->getCurrentLayout();
-
-        if (empty($this->currentLayout)) {
-            if ($skipDefault) {
-                return $this->currentLayout;
+            if (empty($this->currentLayout)) {
+                if ($skipDefault) {
+                    return $this->currentLayout;
+                }
+                $this->currentLayout = $this->getDefaultLayout();
             }
-            $this->currentLayout = $this->getDefaultLayout();
         }
-
         return apply_filters('jankx_template_get_site_layout', $this->currentLayout);
     }
 

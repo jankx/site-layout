@@ -1,7 +1,6 @@
 <?php
 namespace Jankx\SiteLayout;
 
-use Jankx\TemplateEngine\EngineManager;
 use Jankx\SiteLayout\Admin\Metabox\PostLayout;
 use Jankx\Template\Page;
 use Jankx\Template\Template;
@@ -9,6 +8,7 @@ use Jankx\SiteLayout\Constracts\MobileMenuLayout;
 use Jankx\SiteLayout\Menu\JankxItems;
 use Jankx\SiteLayout\Menu\Slideout;
 use Jankx\SiteLayout\Customizer\Header as HeaderCustomizer;
+use Jankx\TemplateLoader;
 
 use function get_current_screen;
 
@@ -77,12 +77,12 @@ class SiteLayout
 
     protected function initHooks()
     {
-        add_action('after_setup_theme', array($this, 'registerMenus'));
+        add_action('init', array($this, 'registerMenus'));
         add_action('widgets_init', array($this, 'registerSidebars'), 5);
-        add_action('jankx_call_page_template', array($this, 'buildLayout'));
+        add_action('jankx_prepare_render_template', array($this, 'buildLayout'));
 
         add_action('get_sidebar', array(SiteLayout::class, 'getSidebarName'));
-        add_action('after_setup_theme', array($this->menu, 'register'));
+        add_action('init', array($this->menu, 'register'));
 
         add_action('wp_head', array($this, 'metaViewport'), 5);
         add_filter('body_class', array($this, 'bodyClasses'));
@@ -103,16 +103,14 @@ class SiteLayout
         );
     }
 
-    public function buildLayout($page)
+    public function buildLayout()
     {
         /**
          * Load template for site layout
          */
         $this->layoutLoader = new LayoutLoader(
             $this->getLayout(),
-            EngineManager::getEngine(
-                Template::getDefaultLoader()
-            )
+            TemplateLoader::getTemplateEngine()
         );
         $this->layoutLoader->load();
     }

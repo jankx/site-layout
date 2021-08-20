@@ -194,8 +194,8 @@ class SiteLayout
             'name' => __('Primary Sidebar', 'jankx'),
             'before_widget' => '<section id="%1$s" class="widget jankx-widget %2$s">',
             'after_widget' => '</section>',
-            'before_title' => '<h3 class="jankx-title widget-title">',
-            'after_title' => '</h3>'
+            'before_title' => '<h3 class="jankx-title widget-title"><span>',
+            'after_title' => '</span></h3>'
         ));
         register_sidebar($primaryArgs);
 
@@ -205,8 +205,8 @@ class SiteLayout
                 'name' => __('Secondary Sidebar', 'jankx'),
                 'before_widget' => '<section id="%1$s" class="widget jankx-widget %2$s">',
                 'after_widget' => '</section>',
-                'before_title' => '<h3 class="jankx-title widget-title">',
-                'after_title' => '</h3>'
+                'before_title' => '<h3 class="jankx-title widget-title"><span>',
+                'after_title' => '</span></h3>'
             ));
             register_sidebar($secondaryArgs);
         }

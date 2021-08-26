@@ -98,9 +98,9 @@ class LayoutLoader
 
     public function closeMainContentSidebarWrapInner()
     {
-        do_action('jankx_template_main_content_sidebar_end');
-
         jankx_template('layout/content-sidebar-close');
+
+        do_action('jankx_template_main_content_sidebar_end');
     }
 
     public function closeMainContentSidebarWrap()

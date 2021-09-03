@@ -23,7 +23,7 @@ class Slideout implements MobileMenuLayout
         $slideDirection = apply_filters('slideout_menu_direction', 'left');
         $enableTouch    = apply_filters('slideout_menu_touch', false) ? 'true' : 'false';
 
-        execute_script("<script>var slideout = new Slideout({
+        execute_script("<script>window.slideout = new Slideout({
             'panel': document.getElementById('main-panel'),
             'menu': document.getElementById('mobile-menu'),
             'padding': 256,

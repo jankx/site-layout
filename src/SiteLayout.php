@@ -6,7 +6,7 @@ use Jankx\Template\Page;
 use Jankx\Template\Template;
 use Jankx\SiteLayout\Constracts\MobileMenuLayout;
 use Jankx\SiteLayout\Menu\JankxItems;
-use Jankx\SiteLayout\Menu\Slideout;
+use Jankx\SiteLayout\Menu\Mobile\Slideout;
 use Jankx\SiteLayout\Customizer\Header as HeaderCustomizer;
 use Jankx\TemplateLoader;
 
@@ -119,9 +119,6 @@ class SiteLayout
     {
         if (!apply_filters('jankx_template_disable_base_css', false)) {
             $classes[] = 'jankx-base';
-        }
-        if (jankx_is_mobile_template()) {
-            $classes[] = 'jankx-mobile';
         }
 
         $classes[] = apply_filters('jankx_site_layout_menu_style', 'default-navigation');

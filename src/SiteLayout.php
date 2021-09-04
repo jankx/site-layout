@@ -88,6 +88,11 @@ class SiteLayout
         add_filter('body_class', array($this, 'bodyClasses'));
 
         add_action('template_redirect', array($this, 'createMobileMenu'), 5);
+
+        add_filter(
+            'jankx/template/tag/html/classes',
+            array($this, 'appendMobileLayoutToHtmlClass')
+        );
     }
 
     public function registerMenus()
@@ -247,5 +252,14 @@ class SiteLayout
                 $mobileMenu->load();
             }
         }
+    }
+
+    public function appendMobileLayoutToHtmlClass($classes)
+    {
+        if (jankx_is_mobile()) {
+            $classes[] = 'jankx-mobile';
+        }
+
+        return $classes;
     }
 }

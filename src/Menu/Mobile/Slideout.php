@@ -14,10 +14,14 @@ class Slideout implements MobileMenuLayout
 
         add_action('jankx_template_after_header', array($this, 'openMainPanel'), 9);
         add_action('wp_footer', array($this, 'closeMainPanel'), 1);
+        add_action('body_class', array($this, 'appendSlideoutClassToBody'));
 
         add_filter('jankx_asset_js_dependences', function ($deps) {
             $deps[] = 'slideout';
             return $deps;
+        });
+        add_filter('jankx/component/mobile_header/render_hook', function () {
+            return 'jankx_template_after_header';
         });
 
         $slideDirection = apply_filters('slideout_menu_direction', 'left');
@@ -40,6 +44,12 @@ class Slideout implements MobileMenuLayout
             });
           }
           </script>");
+    }
+
+    public function appendSlideoutClassToBody($classes)
+    {
+        $classes[] = 'menu-style-slideout';
+        return $classes;
     }
 
     public function openMainPanel()

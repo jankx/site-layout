@@ -10,7 +10,7 @@ use Jankx\SiteLayout\Customizer\Header as HeaderCustomizer;
 use Jankx\TemplateLoader;
 
 use Jankx\SiteLayout\Menu\Mobile\Slideout;
-use Jankx\SiteLayout\Menu\Mobile\Offcanvas;
+use Jankx\SiteLayout\Menu\Mobile\NavbarCollapse;
 
 use function get_current_screen;
 
@@ -233,7 +233,7 @@ class SiteLayout
                 'jankx/layout/site/mobile/menus',
                 array(
                     Slideout::NAME => Slideout::class,
-                    Offcanvas::NAME => Offcanvas::class,
+                    NavbarCollapse::NAME => NavbarCollapse::class,
                 )
             );
         }

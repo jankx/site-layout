@@ -6,9 +6,11 @@ use Jankx\Template\Page;
 use Jankx\Template\Template;
 use Jankx\SiteLayout\Constracts\MobileMenuLayout;
 use Jankx\SiteLayout\Menu\JankxItems;
-use Jankx\SiteLayout\Menu\Mobile\Slideout;
 use Jankx\SiteLayout\Customizer\Header as HeaderCustomizer;
 use Jankx\TemplateLoader;
+
+use Jankx\SiteLayout\Menu\Mobile\Slideout;
+use Jankx\SiteLayout\Menu\Mobile\Offcanvas;
 
 use function get_current_screen;
 
@@ -228,9 +230,10 @@ class SiteLayout
     {
         if (is_null(static::$mobileMenus)) {
             static::$mobileMenus = apply_filters(
-                'jankx_site_layout_mobile_menus',
+                'jankx/layout/site/mobile/menus',
                 array(
-                    Slideout::NAME => Slideout::class
+                    Slideout::NAME => Slideout::class,
+                    Offcanvas::NAME => Offcanvas::class,
                 )
             );
         }
@@ -244,7 +247,7 @@ class SiteLayout
             return;
         }
         $menus = static::getMobileMenus();
-        $useMenu = apply_filters('jankx_site_layout_mobile_menu', Slideout::NAME);
+        $useMenu = apply_filters('jankx/layout/site/mobile/menu/apply', Slideout::NAME);
 
         if (isset($menus[$useMenu])) {
             $mobileMenu = new $menus[$useMenu]();

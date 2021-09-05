@@ -20,9 +20,6 @@ class Slideout implements MobileMenuLayout
             $deps[] = 'slideout';
             return $deps;
         });
-        add_filter('jankx/component/mobile_header/render_hook', function () {
-            return 'jankx_template_after_header';
-        });
 
         $slideDirection = apply_filters('slideout_menu_direction', 'left');
         $enableTouch    = apply_filters('slideout_menu_touch', false) ? 'true' : 'false';

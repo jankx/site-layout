@@ -7,7 +7,7 @@ use Jankx\Template\Template;
 use Jankx\SiteLayout\Constracts\MobileMenuLayout;
 use Jankx\SiteLayout\Menu\JankxItems;
 use Jankx\SiteLayout\Customizer\Header as HeaderCustomizer;
-use Jankx\TemplateLoader;
+use Jankx\TemplateAndLayout;
 
 use Jankx\SiteLayout\Menu\Mobile\Slideout;
 use Jankx\SiteLayout\Menu\Mobile\NavbarCollapse;
@@ -117,7 +117,7 @@ class SiteLayout
          */
         $this->layoutLoader = new LayoutLoader(
             $this->getLayout(),
-            TemplateLoader::getTemplateEngine()
+            TemplateAndLayout::getTemplateEngine()
         );
         $this->layoutLoader->load();
     }

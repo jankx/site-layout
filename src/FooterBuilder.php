@@ -61,8 +61,8 @@ class FooterBuilder
         $footerWidgetSidebarArgs = apply_filters('jankx_template_footer_widget_args', array(
             'before_widget' => '<div id="%1$s" class="widget %2$s">',
             'after_widget'  => '</div>',
-            'before_title'  => '<div class="jankx-title widget-title">',
-            'after_title'   => '</div>'
+            'before_title'  => '<p class="jankx-title widget-title">',
+            'after_title'   => '</p>'
         ));
 
         $currentSidebarIndex = 1;

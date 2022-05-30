@@ -34,7 +34,7 @@ class FooterBuilder
         if (!is_null(static::$numOfFooterWidgets)) {
             return static::$numOfFooterWidgets;
         }
-        static::$numOfFooterWidgets = apply_filters('jankx_template_num_of_footer_widgets', 4);
+        static::$numOfFooterWidgets = apply_filters('jankx_template_num_of_footer_widgets', 0);
 
         // Return the number of the footer widgets
         return static::$numOfFooterWidgets;

@@ -2,8 +2,6 @@
 namespace Jankx\SiteLayout;
 
 use Jankx\SiteLayout\Admin\Metabox\PostLayout;
-use Jankx\Template\Page;
-use Jankx\Template\Template;
 use Jankx\SiteLayout\Constracts\MobileMenuLayout;
 use Jankx\SiteLayout\Menu\JankxItems;
 use Jankx\SiteLayout\Customizer\Header as HeaderCustomizer;
@@ -16,12 +14,12 @@ use function get_current_screen;
 
 class SiteLayout
 {
-    const LAYOUT_FULL_WIDTH              = 'jankx-fw';
-    const LAYOUT_CONTENT_SIDEBAR         = 'jankx-cs';
-    const LAYOUT_SIDEBAR_CONTENT         = 'jankx-sc';
-    const LAYOUT_CONTENT_SIDEBAR_SIDEBAR = 'jankx-css';
-    const LAYOUT_SIDEBAR_CONTENT_SIDEBAR = 'jankx-scs';
-    const LAYOUT_SIDEBAR_SIDEBAR_CONTENT = 'jankx-ssc';
+    const LAYOUT_FULL_WIDTH               = 'jankx-fw';
+    const LAYOUT_CONTENT_SIDEBAR          = 'jankx-cs';
+    const LAYOUT_SIDEBAR_CONTENT          = 'jankx-sc';
+    const LAYOUT_CONTENT_SIDEBAR_SIDEBAR  = 'jankx-css';
+    const LAYOUT_SIDEBAR_CONTENT_SIDEBAR  = 'jankx-scs';
+    const LAYOUT_SIDEBAR_SIDEBAR_CONTENT  = 'jankx-ssc';
 
     protected static $instance;
     protected static $sidebarName;
@@ -136,13 +134,13 @@ class SiteLayout
 
     public function getSupportLayouts()
     {
-        $layouts = apply_filters('jankx_support_site_layouts', array(
-            static::LAYOUT_FULL_WIDTH              => __('Full Width', 'jankx'),
-            static::LAYOUT_CONTENT_SIDEBAR         => __('Content Sidebar', 'jankx'),
-            static::LAYOUT_SIDEBAR_CONTENT         => __('Sidebar Content', 'jankx'),
-            static::LAYOUT_CONTENT_SIDEBAR_SIDEBAR => __('Content Sidebar Sidebar', 'jankx'),
-            static::LAYOUT_SIDEBAR_CONTENT_SIDEBAR => __('Sidebar Content Sidebar', 'jankx'),
-            static::LAYOUT_SIDEBAR_SIDEBAR_CONTENT => __('Sidebar Sidebar Content', 'jankx'),
+        $layouts = apply_filters('jankx/site/layouts', array(
+            static::LAYOUT_FULL_WIDTH               => __('Full Width', 'jankx'),
+            static::LAYOUT_CONTENT_SIDEBAR          => __('Content Sidebar', 'jankx'),
+            static::LAYOUT_SIDEBAR_CONTENT          => __('Sidebar Content', 'jankx'),
+            static::LAYOUT_CONTENT_SIDEBAR_SIDEBAR  => __('Content Sidebar Sidebar', 'jankx'),
+            static::LAYOUT_SIDEBAR_CONTENT_SIDEBAR  => __('Sidebar Content Sidebar', 'jankx'),
+            static::LAYOUT_SIDEBAR_SIDEBAR_CONTENT  => __('Sidebar Sidebar Content', 'jankx'),
         ));
 
         return $layouts;

@@ -131,7 +131,8 @@ class LayoutLoader
 
     protected function buildSidebarLayout()
     {
-        if ($this->layout === SiteLayout::LAYOUT_FULL_WIDTH) {
+        $fullWidthLayouts = apply_filters('jankx/layout/full_width', [SiteLayout::LAYOUT_FULL_WIDTH]);
+        if (in_array($this->layout, $fullWidthLayouts)) {
             return;
         }
 

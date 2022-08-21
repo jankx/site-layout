@@ -30,6 +30,9 @@ class SiteLayout
 
     public $layoutLoader;
 
+    /**
+     * @return static
+     */
     public static function getInstance()
     {
         if (is_null(static::$instance)) {

@@ -64,10 +64,11 @@ class JankxItems
 
         static::$jankxNavItems = array(
             'jankx-logo' => __('Site Logo', 'jankx'),
-            'jankx-search-form' => __('Search Form', 'jankx')
+            'jankx-search-form' => __('Search Form', 'jankx'),
+            'jankx-hotline' => __('Hotline', 'jankx'),
         );
         static::$jankxNavItems = apply_filters(
-            'jankx_site_layout_menu_items',
+            'jankx/layout/site/menu/itemtypes',
             static::$jankxNavItems
         );
 
@@ -79,7 +80,7 @@ class JankxItems
         $title = '';
         if ($key === 'jankx-logo') {
             $title = get_bloginfo('name');
-        } elseif ($key === 'jankx-search-form') {
+        } else {
             $title = static::$jankxNavItems[$key];
         }
 

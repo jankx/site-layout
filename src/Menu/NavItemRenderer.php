@@ -57,6 +57,15 @@ class NavItemRenderer
         ));
     }
 
+    public function getJankxHotline($item, $depth, $args)
+    {
+        $hotline = $item->post_title;
+        if (Option::get('contact_hotline')) {
+            $hotline = Option::get('contact_hotline');
+        }
+        return apply_filters('the_title', sprintf('<a href="tel://%s">%s</a>', preg_replace('/[^\d]/', '', $hotline), $hotline), $item->ID);
+    }
+
     protected function getContent($item_output, $item, $depth, $args)
     {
         $method = sprintf("get%s", preg_replace_callback(array('/^([a-z])/', '/[-_]([a-z])/'), function ($matches) {

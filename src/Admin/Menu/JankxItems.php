@@ -1,5 +1,5 @@
 <?php
-namespace Jankx\SiteLayout\Menu;
+namespace Jankx\SiteLayout\Admin\Menu;
 
 use Jankx;
 use Jankx\SiteLayout\Menu\NavItemRenderer;

@@ -2,8 +2,7 @@
 namespace Jankx\SiteLayout\Menu;
 
 use Jankx\Option\Option;
-use Jankx\SiteLayout\Menu\JankxItems;
-use Medoid_Image;
+use Jankx\SiteLayout\Admin\Menu\JankxItems;
 
 class NavItemRenderer
 {

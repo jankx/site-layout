@@ -1,5 +1,5 @@
 <?php
-namespace Jankx\SiteLayout\Menu;
+namespace Jankx\SiteLayout\Menu\Renderer;
 
 use Jankx\Option\Option;
 use Jankx\SiteLayout\Admin\Menu\JankxItems;

@@ -2,7 +2,7 @@
 namespace Jankx\SiteLayout\Admin\Menu;
 
 use Jankx;
-use Jankx\SiteLayout\Menu\NavItemRenderer;
+use Jankx\SiteLayout\Menu\Renderer\NavItemRenderer;
 
 class JankxItems
 {

@@ -82,7 +82,7 @@ class SiteLayout
     {
         add_action('init', array($this, 'registerMenus'));
         add_action('widgets_init', array($this, 'registerSidebars'), 5);
-        add_action('jankx_prepare_render_template', array($this, 'buildLayout'));
+        add_action('jankx/template/renderer/pre', array($this, 'buildLayout'));
 
         add_action('get_sidebar', array(SiteLayout::class, 'getSidebarName'));
         add_action('init', array($this->menu, 'register'));

@@ -26,7 +26,7 @@ class LayoutLoader
         $this->buildMainContentWrap();
         $this->buildSidebarLayout();
 
-        do_action('jankx_template_build_site_layout', $this);
+        do_action('jankx/template/site/layout', $this);
     }
 
     protected function buildBaseLayout()

@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\SiteLayout;
 
 use Jankx\SiteLayout\SiteLayout;
@@ -138,11 +139,13 @@ class LayoutLoader
 
         add_action('jankx_template_after_main_content', 'get_sidebar', 35);
 
-        if (in_array($this->layout, array(
+        if (
+            in_array($this->layout, array(
             SiteLayout::LAYOUT_CONTENT_SIDEBAR_SIDEBAR,
             SiteLayout::LAYOUT_SIDEBAR_CONTENT_SIDEBAR,
             SiteLayout::LAYOUT_SIDEBAR_SIDEBAR_CONTENT
-        ))) {
+            ))
+        ) {
             add_action('jankx_template_after_main_content', array($this, 'loadSecondarySidebar'), 45);
         }
     }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\SiteLayout\Menu\Renderer;
 
 use Jankx\Option\Option;

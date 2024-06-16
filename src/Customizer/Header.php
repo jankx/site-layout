@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\SiteLayout\Customizer;
 
 class Header

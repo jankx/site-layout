@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\SiteLayout;
 
 use Jankx\SiteLayout\Admin\Metabox\PostLayout;
@@ -6,7 +7,6 @@ use Jankx\SiteLayout\Constracts\MobileMenuLayout;
 use Jankx\SiteLayout\Admin\Menu\JankxItems;
 use Jankx\SiteLayout\Customizer\Header as HeaderCustomizer;
 use Jankx\TemplateAndLayout;
-
 use Jankx\SiteLayout\Menu\Mobile\Slideout;
 use Jankx\SiteLayout\Menu\Mobile\NavbarCollapse;
 

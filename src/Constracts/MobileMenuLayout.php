@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\SiteLayout\Constracts;
 
 interface MobileMenuLayout

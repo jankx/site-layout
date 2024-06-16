@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\SiteLayout\Admin\Menu;
 
 use Jankx;

@@ -3,6 +3,7 @@ namespace Jankx\SiteLayout;
 
 use Jankx\Asset\Cache;
 use Jankx\Asset\CustomizableAsset;
+use Jankx\GlobalConfigs;
 
 class FooterBuilder
 {
@@ -93,10 +94,14 @@ class FooterBuilder
 
     public function openFooterWidgetAreas()
     {
+        $footerClasses = array('jankx-footer-widgets-area');
+        if (($columns = GlobalConfigs::get('site.layout.footer.sidebars', 0)) > 0) {
+            $footerClasses[] = 'columns-' . $columns;
+        }
         jankx_template('partials/footer/open-widget-areas', array(
             'footer_widget_classes' => implode(' ', (array)apply_filters(
                 'jankx_template_footer_widget_wrapper_class',
-                array('jankx-footer-widgets-area')
+                $footerClasses
             ))));
     }
 

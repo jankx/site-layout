@@ -165,6 +165,7 @@ class SiteLayout
         }
         $page = Page::getInstance();
         $page->setLoadedLayout($this->currentLayout);
+
         return apply_filters('jankx/layout/site/currentLayout', $this->currentLayout);
     }
 
@@ -191,14 +192,18 @@ class SiteLayout
     public function getDefaultLayout()
     {
         $page = Page::getInstance();
-        $loadedLayout = GlobalConfigs::get(sprintf('layouts.%s.name', $page->getContext()));
-        if (is_null($loadedLayout)) {
-            $loadedLayout = GlobalConfigs::get('layouts.default.name', static::LAYOUT_FULL_WIDTH);
+        $defaultLayout = GlobalConfigs::get(sprintf('layouts.%s.name', $page->getContext()));
+
+        if (is_null($defaultLayout)) {
+            $defaultLayout = GlobalConfigs::get(
+                'layouts.default.name',
+                is_singular('post') ? static::LAYOUT_CONTENT_SIDEBAR : static::LAYOUT_FULL_WIDTH
+            );
         }
 
         return apply_filters(
             'jankx/site/layout/default',
-            is_singular('post') ? static::LAYOUT_CONTENT_SIDEBAR : static::LAYOUT_FULL_WIDTH
+            $defaultLayout
         );
     }
 

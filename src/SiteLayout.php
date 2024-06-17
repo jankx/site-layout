@@ -2,12 +2,10 @@
 
 namespace Jankx\SiteLayout;
 
-use Jankx\GlobalConfigs;
 use Jankx\SiteLayout\Admin\Metabox\PostLayout;
 use Jankx\SiteLayout\Constracts\MobileMenuLayout;
 use Jankx\SiteLayout\Admin\Menu\JankxItems;
 use Jankx\SiteLayout\Customizer\Header as HeaderCustomizer;
-use Jankx\TemplateAndLayout;
 use Jankx\SiteLayout\Menu\Mobile\Slideout;
 use Jankx\SiteLayout\Menu\Mobile\NavbarCollapse;
 use Jankx\Template\Page;
@@ -31,6 +29,12 @@ class SiteLayout
     protected $menu;
 
     public $layoutLoader;
+
+    protected $templateEngine;
+
+    protected $pageTemplates;
+
+    protected $defaultLayout;
 
     /**
      * @return static
@@ -113,6 +117,28 @@ class SiteLayout
         );
     }
 
+    public function setPageTemplates($templates) {
+        $this->pageTemplates = $templates;
+    }
+
+    public function getPageTemplates() {
+        return $this->pageTemplates;
+    }
+
+
+    public function setDefaultLayout($layout) {
+        $this->defaultLayout = $layout;
+    }
+
+
+    public function setTemplateEngine($templateEngine) {
+        $this->templateEngine = $templateEngine;
+    }
+
+    public function getTemplateEngine() {
+        return $this->templateEngine;
+    }
+
     public function buildLayout()
     {
         /**
@@ -120,7 +146,7 @@ class SiteLayout
          */
         $this->layoutLoader = new LayoutLoader(
             $this->getLayout(),
-            TemplateAndLayout::getTemplateEngine()
+            $this->getTemplateEngine()
         );
         $this->layoutLoader->load();
     }
@@ -191,19 +217,11 @@ class SiteLayout
 
     public function getDefaultLayout()
     {
-        $page = Page::getInstance();
-        $defaultLayout = GlobalConfigs::get(sprintf('layouts.%s.name', $page->getContext()));
-
-        if (is_null($defaultLayout)) {
-            $defaultLayout = GlobalConfigs::get(
-                'layouts.default.name',
-                is_singular('post') ? static::LAYOUT_CONTENT_SIDEBAR : static::LAYOUT_FULL_WIDTH
-            );
-        }
-
         return apply_filters(
             'jankx/site/layout/default',
-            $defaultLayout
+            !is_null($this->defaultLayout)
+                ? $this->defaultLayout
+                : (is_singular('post') ? static::LAYOUT_CONTENT_SIDEBAR : static::LAYOUT_FULL_WIDTH)
         );
     }
 

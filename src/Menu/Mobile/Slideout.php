@@ -11,9 +11,9 @@ class Slideout implements MobileMenuLayout
     public function load()
     {
         add_action('jankx_template_before_header', array($this, 'openSlideoutMenu'), 15);
-        add_action('jankx_template_after_header', array($this, 'closeSlideoutMenu'), 5);
+        add_action('jankx/template/header/after', array($this, 'closeSlideoutMenu'), 5);
 
-        add_action('jankx_template_after_header', array($this, 'openMainPanel'), 9);
+        add_action('jankx/template/header/after', array($this, 'openMainPanel'), 9);
         add_action('wp_footer', array($this, 'closeMainPanel'), 1);
         add_action('body_class', array($this, 'appendSlideoutClassToBody'));
 

@@ -2,6 +2,7 @@
 
 namespace Jankx\SiteLayout;
 
+use Jankx\GlobalConfigs;
 use Jankx\SiteLayout\Admin\Metabox\PostLayout;
 use Jankx\SiteLayout\Constracts\MobileMenuLayout;
 use Jankx\SiteLayout\Admin\Menu\JankxItems;
@@ -9,6 +10,7 @@ use Jankx\SiteLayout\Customizer\Header as HeaderCustomizer;
 use Jankx\TemplateAndLayout;
 use Jankx\SiteLayout\Menu\Mobile\Slideout;
 use Jankx\SiteLayout\Menu\Mobile\NavbarCollapse;
+use Jankx\Template\Page;
 
 use function get_current_screen;
 
@@ -125,11 +127,11 @@ class SiteLayout
 
     public function bodyClasses($classes)
     {
-        if (!apply_filters('jankx_template_disable_base_css', false)) {
+        if (!apply_filters('jankx/layout/based/common-css', false)) {
             $classes[] = 'jankx-base';
         }
 
-        $classes[] = apply_filters('jankx_site_layout_menu_style', 'default-navigation');
+        $classes[] = apply_filters('jankx/layout/site/menu/styles', 'default-navigation');
         $classes[] = $this->getLayout();
 
         return $classes;
@@ -161,12 +163,14 @@ class SiteLayout
                 $this->currentLayout = $this->getDefaultLayout();
             }
         }
-        return apply_filters('jankx_template_get_site_layout', $this->currentLayout);
+        $page = Page::getInstance();
+        $page->setLoadedLayout($this->currentLayout);
+        return apply_filters('jankx/layout/site/currentLayout', $this->currentLayout);
     }
 
     public function getCurrentLayout()
     {
-        $pre = apply_filters('jankx_template_pre_get_current_site_layout', null);
+        $pre = apply_filters('jankx/layout/site/pre', null);
         if (!empty($pre)) {
             return $pre;
         }
@@ -186,15 +190,21 @@ class SiteLayout
 
     public function getDefaultLayout()
     {
+        $page = Page::getInstance();
+        $loadedLayout = GlobalConfigs::get(sprintf('layouts.%s.name', $page->getContext()));
+        if (is_null($loadedLayout)) {
+            $loadedLayout = GlobalConfigs::get('layouts.default.name', static::LAYOUT_FULL_WIDTH);
+        }
+
         return apply_filters(
-            'jankx_template_default_site_layout',
+            'jankx/site/layout/default',
             is_singular('post') ? static::LAYOUT_CONTENT_SIDEBAR : static::LAYOUT_FULL_WIDTH
         );
     }
 
     public function registerSidebars()
     {
-        $primaryArgs = apply_filters('jankx_site_layout_primary_sidebar_args', array(
+        $primaryArgs = apply_filters('jankx/layout/sidebars/register/args', array(
             'id' => 'primary',
             'name' => __('Primary Sidebar', 'jankx'),
             'before_widget' => '<section id="%1$s" class="widget jankx-widget %2$s">',
@@ -204,8 +214,8 @@ class SiteLayout
         ));
         register_sidebar($primaryArgs);
 
-        if (apply_filters('jankx_site_layout_enable_alt_sidebar', true)) {
-            $secondaryArgs = apply_filters('jankx_site_layout_secondary_sidebar_args', array(
+        if (apply_filters('jankx/layout/sidebars/alternative/enabled', true)) {
+            $secondaryArgs = apply_filters('jankx/layout/sidebars/secondary/register/args', array(
                 'id' => 'secondary',
                 'name' => __('Secondary Sidebar', 'jankx'),
                 'before_widget' => '<section id="%1$s" class="widget jankx-widget %2$s">',
@@ -219,7 +229,7 @@ class SiteLayout
 
     public function metaViewport()
     {
-        if (!apply_filters('jankx_site_support_responsive_layout', true)) {
+        if (!apply_filters('jankx/layout/responsive/enabled', true)) {
             return;
         }
         ?>
@@ -244,7 +254,7 @@ class SiteLayout
     public function createMobileMenu()
     {
         // Check theme enable mobile menu
-        if (!apply_filters('jankx_site_layout_enable_mobile_menu', true)) {
+        if (!apply_filters('jankx/layout/mobile/menu/enabled', true)) {
             return;
         }
         $menus = static::getMobileMenus();

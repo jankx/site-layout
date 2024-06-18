@@ -153,7 +153,7 @@ class SiteLayout
 
     public function bodyClasses($classes)
     {
-        if (!apply_filters('jankx/layout/based/common-css', false)) {
+        if (apply_filters('jankx/layout/based/common-css', true)) {
             $classes[] = 'jankx-base';
         }
 

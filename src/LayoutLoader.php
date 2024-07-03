@@ -120,7 +120,7 @@ class LayoutLoader
     {
         $attributes = apply_filters('jankx/attributes/tag_main_content_sidebar', array(
             'id' => 'jankx-main-content',
-            'class' => 'main-content'
+            'class' => apply_filters('jankx/layout/main_content/classes', ['main-content'])
         ));
         printf('<main %s>', jankx_generate_html_attributes($attributes));
     }

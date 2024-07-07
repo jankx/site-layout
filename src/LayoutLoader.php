@@ -3,6 +3,7 @@
 namespace Jankx\SiteLayout;
 
 use Jankx\SiteLayout\SiteLayout;
+use Jankx\Template\Page;
 
 class LayoutLoader
 {
@@ -24,7 +25,14 @@ class LayoutLoader
     public function load()
     {
         $this->buildBaseLayout();
-        $this->buildMainContentWrap();
+
+        $page = Page::getInstance();
+        $siteLayout = SiteLayout::getInstance();
+
+        if (!($page->isGutenbergSupport() && in_array($siteLayout->getCurrentLayout(), [SiteLayout::LAYOUT_FULL_WIDTH]))) {
+            $this->buildMainContentWrap();
+        }
+
         $this->buildSidebarLayout();
 
         do_action('jankx/template/site/layout', $this);

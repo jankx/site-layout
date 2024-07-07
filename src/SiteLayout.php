@@ -117,25 +117,30 @@ class SiteLayout
         );
     }
 
-    public function setPageTemplates($templates) {
+    public function setPageTemplates($templates)
+    {
         $this->pageTemplates = $templates;
     }
 
-    public function getPageTemplates() {
+    public function getPageTemplates()
+    {
         return $this->pageTemplates;
     }
 
 
-    public function setDefaultLayout($layout) {
+    public function setDefaultLayout($layout)
+    {
         $this->defaultLayout = $layout;
     }
 
 
-    public function setTemplateEngine($templateEngine) {
+    public function setTemplateEngine($templateEngine)
+    {
         $this->templateEngine = $templateEngine;
     }
 
-    public function getTemplateEngine() {
+    public function getTemplateEngine()
+    {
         return $this->templateEngine;
     }
 
@@ -144,11 +149,18 @@ class SiteLayout
         /**
          * Load template for site layout
          */
-        $this->layoutLoader = new LayoutLoader(
-            $this->getLayout(),
-            $this->getTemplateEngine()
-        );
-        $this->layoutLoader->load();
+        $jankxPage = Page::getInstance();
+        $this->layoutLoader = $jankxPage->isGutenbergSupport()
+            ? new GutenbergLayoutLoader(
+                $this->getLayout(),
+                $this->getTemplateEngine()
+            )
+            : new LayoutLoader(
+                $this->getLayout(),
+                $this->getTemplateEngine()
+            );
+
+            $this->layoutLoader->load();
     }
 
     public function bodyClasses($classes)

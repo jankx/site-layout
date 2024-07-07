@@ -14,8 +14,8 @@ class NavbarCollapse implements MobileMenuLayout
         add_filter('jankx/component/mobile_header/render_hook', array($this, 'changeHookRenderMobileHeader'));
         add_filter('nav_menu_css_class', array($this, 'createCarretIconShowSubMenu'), 10, 3);
 
-        add_action('jankx_component_before_header_content', array($this, 'openToggleWrapTag'), 12);
-        add_action('jankx_component_after_header_content', array($this, 'closeToggleWrapTag'), 8);
+        add_action('jankx/component/header/content/before', array($this, 'openToggleWrapTag'), 12);
+        add_action('jankx/component/header/content/after', array($this, 'closeToggleWrapTag'), 8);
 
         execute_script("<script>(function(d) {
             var toggleButton = d.querySelector('.menu-style-collapse .toggle-button');
@@ -43,7 +43,7 @@ class NavbarCollapse implements MobileMenuLayout
 
     public function changeHookRenderMobileHeader()
     {
-        return 'jankx_component_before_header_content';
+        return 'jankx/component/header/content/before';
     }
 
     public function openToggleWrapTag()

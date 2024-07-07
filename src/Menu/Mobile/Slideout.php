@@ -10,7 +10,7 @@ class Slideout implements MobileMenuLayout
 
     public function load()
     {
-        add_action('jankx_template_before_header', array($this, 'openSlideoutMenu'), 15);
+        add_action('jankx/template/header/before', array($this, 'openSlideoutMenu'), 15);
         add_action('jankx/template/header/after', array($this, 'closeSlideoutMenu'), 5);
 
         add_action('jankx/template/header/after', array($this, 'openMainPanel'), 9);

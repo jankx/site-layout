@@ -26,8 +26,8 @@ class FooterBuilder
 
         if ($numOfFooterWidgets > 0) {
             add_action('jankx/template/footer/before_widgets', array($this, 'openFooterWidgetAreas'));
-            add_action('jankx_template_footer_widgets', array($this, 'render'));
-            add_action('jankx_template_after_footer_widgets', array($this, 'closeFooterWidgetAreas'));
+            add_action('jankx/template/footer/widgets', array($this, 'render'));
+            add_action('jankx/template/footer/after_widgets', array($this, 'closeFooterWidgetAreas'));
         }
     }
 
@@ -130,7 +130,7 @@ class FooterBuilder
             ));
             $currentSidebarIndex += 1;
         }
-        do_action('jankx_template_after_footer_widgets');
+        do_action('jankx/template/footer/after_widgets');
     }
 
     public function generateFooterWidgetStyles()

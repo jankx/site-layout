@@ -4,6 +4,7 @@ namespace Jankx\SiteLayout\Admin\Menu;
 
 use Jankx;
 use Jankx\SiteLayout\Menu\Renderer\NavItemRenderer;
+use Mega_Menu_Walker;
 
 class JankxItems
 {
@@ -35,7 +36,17 @@ class JankxItems
 
         if (wp_is_request('frontend')) {
             add_filter('wp_nav_menu_objects', array($this->renderer, 'resetWalkerSupportHookStartEl'));
-            add_filter('walker_nav_menu_start_el', array($this->renderer, 'renderMenuItem'), 10, 4);
+
+            $renderer = &$this->renderer;
+
+            add_filter('wp_nav_menu_args', function ($args) use ($renderer) {
+                if (is_a($args['walker'], Mega_Menu_Walker::class)) {
+                    add_filter('megamenu_walker_nav_menu_start_el', array($renderer, 'renderMenuItem'), 10, 4);
+                } else {
+                    add_filter('walker_nav_menu_start_el', array($renderer, 'renderMenuItem'), 10, 4);
+                }
+                return $args;
+            }, 100000);
 
             add_filter('nav_menu_css_class', array($this, 'clean_menu_css_classes'));
             add_filter('nav_menu_item_title', array($this->renderer, 'renderMenuItemSubtitle'), 10, 4);

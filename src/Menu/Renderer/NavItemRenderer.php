@@ -2,8 +2,8 @@
 
 namespace Jankx\SiteLayout\Menu\Renderer;
 
-use Jankx\Option\Option;
 use Jankx\SiteLayout\Admin\Menu\JankxItems;
+use Jankx\Adapter\Options\Helper;
 
 class NavItemRenderer
 {
@@ -60,8 +60,8 @@ class NavItemRenderer
     public function getJankxHotline($item, $depth, $args)
     {
         $hotline = $item->post_title;
-        if (Option::get('contact_hotline')) {
-            $hotline = Option::get('contact_hotline');
+        if (Helper::getOption('contact_hotline')) {
+            $hotline = Helper::getOption('contact_hotline');
         }
         return apply_filters('the_title', sprintf('<a href="tel://%s">%s</a>', preg_replace('/[^\d]/', '', $hotline), $hotline), $item->ID);
     }

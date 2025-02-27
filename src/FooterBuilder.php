@@ -96,7 +96,7 @@ class FooterBuilder
     public function openFooterWidgetAreas()
     {
         $footerClasses = array('jankx-footer-widgets-area');
-        if (($columns = GlobalConfigs::get('site.layout.footer.sidebars', 0)) > 0) {
+        if (($columns = GlobalConfigs::get('customs.layout.footer.sidebars', 0)) > 0) {
             $footerClasses[] = 'columns-' . $columns;
         }
         jankx_template('partials/footer/open-widget-areas', array(

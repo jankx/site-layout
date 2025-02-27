@@ -4,8 +4,7 @@
   "type": "library",
   "require": {
     "jankx/asset": "*",
-    "jankx/template": "*",
-    "jankx/component": "*"
+    "jankx/template": "*"
   },
   "license": "MIT",
   "minimum-stability": "dev",

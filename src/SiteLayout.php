@@ -127,7 +127,7 @@ class SiteLayout
             'primary' => __('Primary Menu', 'jankx'),
         );
         
-        if (GlobalConfigs::get('custom.layout.menu.secondary.enable', false)) {
+        if (GlobalConfigs::get('customs.layout.menu.secondary.enable', false)) {
             $menus['secondary'] = __('Second Menu', 'jankx');
         }
 

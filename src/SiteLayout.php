@@ -9,6 +9,7 @@ use Jankx\SiteLayout\Admin\Menu\JankxItems;
 use Jankx\SiteLayout\Customizer\Header as HeaderCustomizer;
 use Jankx\SiteLayout\Menu\Mobile\Slideout;
 use Jankx\SiteLayout\Menu\Mobile\NavbarCollapse;
+use Jankx\SiteLayout\Menu\SecondaryNavigation;
 use Jankx\Template\Page;
 
 use function get_current_screen;
@@ -112,13 +113,17 @@ class SiteLayout
 
         add_action('wp_head', array($this, 'metaViewport'), 5);
         add_filter('body_class', array($this, 'bodyClasses'));
-
         add_action('template_redirect', array($this, 'createMobileMenu'), 5);
 
         add_filter(
             'jankx/template/tag/html/classes',
             array($this, 'appendMobileLayoutToHtmlClass')
         );
+
+        if (GlobalConfigs::get('customs.layout.menu.secondary.enable', false)) {
+            $secondaryNavigation = new SecondaryNavigation();
+            add_action('wp', [$secondaryNavigation, 'init']);
+        }
     }
 
     public function registerMenus()
@@ -126,7 +131,7 @@ class SiteLayout
         $menus = array(
             'primary' => __('Primary Menu', 'jankx'),
         );
-        
+
         if (GlobalConfigs::get('customs.layout.menu.secondary.enable', false)) {
             $menus['secondary'] = __('Second Menu', 'jankx');
         }

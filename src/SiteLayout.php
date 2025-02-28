@@ -123,13 +123,18 @@ class SiteLayout
 
     public function registerMenus()
     {
+        $menus = array(
+            'primary' => __('Primary Menu', 'jankx'),
+        );
+        
+        if (GlobalConfigs::get('custom.layout.menu.secondary.enable', false)) {
+            $menus['secondary'] = __('Second Menu', 'jankx');
+        }
+
         register_nav_menus(
             apply_filters(
                 'jankx_site_layout_register_menus',
-                array(
-                    'primary' => __('Primary Menu', 'jankx'),
-                    'secondary' => __('Second Menu', 'jankx'),
-                )
+                $menus
             )
         );
     }

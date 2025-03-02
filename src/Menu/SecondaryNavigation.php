@@ -2,6 +2,8 @@
 
 namespace Jankx\SiteLayout\Menu;
 
+use Jankx\GlobalConfigs;
+
 class SecondaryNavigation
 {
     public function __construct()
@@ -18,6 +20,7 @@ class SecondaryNavigation
         jankx_component('nav', [
             'theme_location' => 'secondary',
             'open_container' => true,
+            'sticky' => GlobalConfigs::get('customs.layout.menu.secondary.sticky', false)
         ], true);
     }
 }

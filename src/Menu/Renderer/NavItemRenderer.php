@@ -63,7 +63,7 @@ class NavItemRenderer
         if (Helper::getOption('contact_hotline')) {
             $hotline = Helper::getOption('contact_hotline');
         }
-        return apply_filters('the_title', sprintf('<a href="tel://%s">%s</a>', preg_replace('/[^\d]/', '', $hotline), $hotline), $item->ID);
+        return apply_filters('jankx/contact/hotline', sprintf('<a href="tel://%s">%s</a>', preg_replace('/[^\d]/', '', $hotline), $hotline), $item->ID);
     }
 
     protected function getContent($item_output, $item, $depth, $args)

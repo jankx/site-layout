@@ -35,7 +35,7 @@ class Slideout implements MobileMenuLayout
           });
 
           // Toggle button
-          var toogleButton = document.querySelector('.toggle-button');
+          var toogleButton = document.querySelector('.toggle-sp-menu-button');
           if (toogleButton) {
             toogleButton.addEventListener('click', function() {
               slideout.toggle();

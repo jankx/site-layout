@@ -18,7 +18,7 @@ class NavbarCollapse implements MobileMenuLayout
         add_action('jankx/component/header/content/after', array($this, 'closeToggleWrapTag'), 8);
 
         execute_script("<script>(function(d) {
-            var toggleButton = d.querySelector('.menu-style-collapse .toggle-button');
+            var toggleButton = d.querySelector('.menu-style-collapse .toggle-sp-menu-button');
             toggleButton.addEventListener('click', function(e) {
                 var site_header = e.target.findParent('.jankx-site-header');
                 if (site_header) {

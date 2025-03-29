@@ -7,6 +7,7 @@ use Jankx\SiteLayout\Admin\Metabox\PostLayout;
 use Jankx\SiteLayout\Constracts\MobileMenuLayout;
 use Jankx\SiteLayout\Admin\Menu\JankxItems;
 use Jankx\SiteLayout\Customizer\Header as HeaderCustomizer;
+use Jankx\SiteLayout\Menu\Mobile\SecondaryMenuOffcanvas;
 use Jankx\SiteLayout\Menu\Mobile\Slideout;
 use Jankx\SiteLayout\Menu\Mobile\NavbarCollapse;
 use Jankx\SiteLayout\Menu\SecondaryNavigation;
@@ -310,6 +311,7 @@ class SiteLayout
                 array(
                     Slideout::NAME => Slideout::class,
                     NavbarCollapse::NAME => NavbarCollapse::class,
+                    SecondaryMenuOffcanvas::NAME => SecondaryMenuOffcanvas::class,
                 )
             );
         }
@@ -323,7 +325,10 @@ class SiteLayout
             return;
         }
         $menus = static::getMobileMenus();
-        $useMenu = apply_filters('jankx/layout/site/mobile/menu/apply', Slideout::NAME);
+        $useMenu = apply_filters(
+            'jankx/layout/site/mobile/menu/apply',
+            !GlobalConfigs::get('customs.layout.menu.secondary.enable', false)  ? Slideout::NAME : SecondaryMenuOffcanvas::NAME
+        );
 
         if (isset($menus[$useMenu])) {
             $mobileMenu = new $menus[$useMenu]();

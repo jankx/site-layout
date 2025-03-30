@@ -2,6 +2,7 @@
 
 namespace Jankx\SiteLayout\Menu\Mobile;
 
+use Jankx;
 use Jankx\SiteLayout\Constracts\MobileMenuLayout;
 
 class SecondaryMenuOffcanvas implements MobileMenuLayout
@@ -15,36 +16,43 @@ class SecondaryMenuOffcanvas implements MobileMenuLayout
             $deps[] = 'mmenu-light';
             return $deps;
         });
+
         add_filter('jankx_asset_css_dependences', function ($deps) {
 
             $deps[] = 'mmenu-light';
             return $deps;
         });
+
         add_filter('jankx_component_navigation_secondary_args', function ($args) {
 
             // $args['container_class'] = 'mm-menu mm-horizontal mm-offcanvas';
             $args['container_id'] = 'offcanvas-menu';
             return $args;
         });
+
         add_action('body_class', array($this, 'addMmenuToBodyClasses'));
-        execute_script(jsContent: '<script>
+
+        $navigationOptions = apply_filters('jankx/mmenu/navigation/options', [
+            'theme' => "dark",
+            'slidingSubmenus' => true,
+            'title' => Jankx::themeName()
+        ]);
+
+        $offcanvasOptions = apply_filters('jankx/mmenu/canvas/options', []);
+
+        execute_script('<script>
                 const mmenu = new MmenuLight(
                     document.querySelector( "#offcanvas-menu" ),
                     "(max-width: 767px)"
                 );
-                const navigator = mmenu.navigation({
-                    // options
-                });
-                const drawer = mmenu.offcanvas({
-                    // options
-                });
+                const navigator = mmenu.navigation(' . json_encode($navigationOptions) . ');
+                const drawer = mmenu.offcanvas(' . json_encode($offcanvasOptions) . ');
                 document.querySelector( "button.toggle-sp-menu-button" )
                                 .addEventListener( "click", ( event ) => {
                                     event.preventDefault();
                                     drawer.open();
                                 });
-            </script>'
-        );
+            </script>');
     }
 
 

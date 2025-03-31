@@ -31,6 +31,8 @@ class SecondaryMenuOffcanvas implements MobileMenuLayout
         });
 
         add_action('body_class', array($this, 'addMmenuToBodyClasses'));
+        add_action('jankx/template/header/before', [$this, 'openMmenuPageSection'], 5);
+        add_action('jankx/template/footer/after', [$this, 'closeMmenuPageSection'], 25);
 
         $navigationOptions = apply_filters('jankx/mmenu/navigation/options', [
             'theme' => "dark",
@@ -59,6 +61,23 @@ class SecondaryMenuOffcanvas implements MobileMenuLayout
     public function addMmenuToBodyClasses($classes)
     {
         $classes[] = 'mmenu-offcanvas';
+        $classes[] = 'mm-wrapper';
+
         return $classes;
+    }
+
+
+    public function openMmenuPageSection() {
+        ?>
+        <!-- Open #page -->
+         <div id="page">
+        <?php
+    }
+
+    public function closeMmenuPageSection() {
+        ?>
+        </div>
+        <!-- close #page -->
+         <?php
     }
 }

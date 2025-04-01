@@ -43,17 +43,39 @@ class SecondaryMenuOffcanvas implements MobileMenuLayout
         $offcanvasOptions = apply_filters('jankx/mmenu/canvas/options', []);
 
         execute_script('<script>
+                function toggleClassByFlag(cls, tag, flag) {
+                    const el = document.querySelector(tag);
+                    if (!el) {
+                        return;
+                    }
+                    if (!flag) {
+                        el.classList.remove(cls);
+                    } else if (!el.classList.contains(cls)) {
+                        el.classList.add(cls);
+                    }
+                }
+
+                function checkScreenForMmenu() {
+                    const panelWidth = (window.innerWidth * 80 / 100) + 35;
+                    toggleClassByFlag("mm-wide-panel", "body", panelWidth > 440);
+                }
+
+
+                checkScreenForMmenu();
                 const mmenu = new MmenuLight(
                     document.querySelector( "#offcanvas-menu" ),
                     "(max-width: 767px)"
                 );
+
                 const navigator = mmenu.navigation(' . json_encode($navigationOptions) . ');
                 const drawer = mmenu.offcanvas(' . json_encode($offcanvasOptions) . ');
                 document.querySelector( "button.toggle-sp-menu-button" )
-                                .addEventListener( "click", ( event ) => {
-                                    event.preventDefault();
-                                    drawer.open();
-                                });
+                    .addEventListener( "click", ( event ) => {
+                        event.preventDefault();
+                        drawer.open();
+                    });
+                window.addEventListener("resize", checkScreenForMmenu);
+                document.addEventListener("DOMContentLoaded", checkScreenForMmenu);
             </script>');
     }
 

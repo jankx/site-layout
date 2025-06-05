@@ -46,7 +46,7 @@ class NavItemRenderer
         $this->logo_is_added = true;
 
         return jankx_component('logo', array(
-            'text' => $item->post_title
+            'text' => is_front_page() ? wp_title('&raquo;', false) : $item->post_title
         ));
     }
 

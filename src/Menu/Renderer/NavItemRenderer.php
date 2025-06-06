@@ -45,8 +45,9 @@ class NavItemRenderer
         // Create a flag logo is added
         $this->logo_is_added = true;
 
+
         return jankx_component('logo', array(
-            'text' => is_front_page() ? wp_title('&raquo;', false) : $item->post_title
+            'text' => $item->post_title,
         ));
     }
 

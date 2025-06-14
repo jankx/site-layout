@@ -3,7 +3,7 @@
 namespace Jankx\SiteLayout\Admin\Metabox;
 
 if (!defined('ABSPATH')) {
-    exit('Cheatin huh?');
+    exit('Cheating huh?');
 }
 
 use Jankx\SiteLayout\SiteLayout;

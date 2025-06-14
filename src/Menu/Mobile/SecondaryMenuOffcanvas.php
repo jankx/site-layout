@@ -3,7 +3,7 @@
 namespace Jankx\SiteLayout\Menu\Mobile;
 
 if (!defined('ABSPATH')) {
-    exit('Cheatin huh?');
+    exit('Cheating huh?');
 }
 
 use Jankx;

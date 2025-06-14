@@ -3,7 +3,7 @@
 namespace Jankx\SiteLayout\Constracts;
 
 if (!defined('ABSPATH')) {
-    exit('Cheatin huh?');
+    exit('Cheating huh?');
 }
 
 interface MobileMenuLayout

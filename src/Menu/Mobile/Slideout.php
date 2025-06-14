@@ -2,6 +2,10 @@
 
 namespace Jankx\SiteLayout\Menu\Mobile;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Jankx\SiteLayout\Constracts\MobileMenuLayout;
 
 class Slideout implements MobileMenuLayout

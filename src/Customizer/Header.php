@@ -2,6 +2,10 @@
 
 namespace Jankx\SiteLayout\Customizer;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 class Header
 {
     public function customize()

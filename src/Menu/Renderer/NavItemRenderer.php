@@ -2,6 +2,10 @@
 
 namespace Jankx\SiteLayout\Menu\Renderer;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Jankx\SiteLayout\Admin\Menu\JankxItems;
 use Jankx\Adapter\Options\Helper;
 

@@ -2,6 +2,10 @@
 
 namespace Jankx\SiteLayout\Admin\Metabox;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Jankx\SiteLayout\SiteLayout;
 
 class PostLayout

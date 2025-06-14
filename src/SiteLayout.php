@@ -2,6 +2,10 @@
 
 namespace Jankx\SiteLayout;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Jankx\GlobalConfigs;
 use Jankx\SiteLayout\Admin\Metabox\PostLayout;
 use Jankx\SiteLayout\Constracts\MobileMenuLayout;

@@ -2,6 +2,10 @@
 
 namespace Jankx\SiteLayout;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Jankx\SiteLayout\SiteLayout;
 use Jankx\Template\Page;
 

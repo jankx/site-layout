@@ -2,6 +2,10 @@
 
 namespace Jankx\SiteLayout\Menu;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Jankx\GlobalConfigs;
 
 class SecondaryNavigation

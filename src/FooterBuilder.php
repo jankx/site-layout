@@ -2,6 +2,10 @@
 
 namespace Jankx\SiteLayout;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Jankx\Asset\Cache;
 use Jankx\Asset\CustomizableAsset;
 use Jankx\GlobalConfigs;

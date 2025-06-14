@@ -2,6 +2,10 @@
 
 namespace Jankx\SiteLayout\Admin\Menu;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Jankx;
 use Jankx\SiteLayout\Menu\Renderer\NavItemRenderer;
 use Mega_Menu_Walker;
